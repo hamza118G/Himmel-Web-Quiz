@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himmel Education - Practice Mode</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Poppins", serif;
+            font-weight: 100;
+            font-style: normal;
+            margin: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 10px;
+        }
+
+        .header img {
+            height: 7rem;
+            margin-bottom: 5px;
+        }
+
+        .header h1 {
+            font-weight: bold;
+            color: #e63946;
+            margin-bottom: 0;
+        }
+
+        .header h2 {
+            font-size: 1.2rem;
+            font-weight: normal;
+            color: #333;
+        }
+
+        .question-section {
+            margin-top: 20px;
+        }
+
+        .question-box {
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .question-content {
+            flex: 1.5;
+            /* Adjust width of the question section */
+            margin-right: 20px;
+            font-size: 17px;
+            /* Reduced size by 30% (from 2rem to 1.4rem) */
+            line-height: 1.4;
+            /* Maintain line spacing for readability */
+            word-wrap: break-word;
+            /* Ensure long text wraps properly */
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            /* Stack options vertically */
+            gap: 8px;
+            /* Smaller gap between options */
+            width: 100%;
+            /* Ensure options fit inside the question box */
+        }
+
+        .options p {
+            font-size: 17px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 2px solid lightgray;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-weight: 600;
+        }
+
+        .options p.selected {
+            background-color: #F48C35;
+        }
+
+        .options p.correct {
+            background-color: #28a745;
+            color: white;
+            border-color: lightgray;
+        }
+
+        .options p.wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #c82333;
+        }
+
+        .explanation-content {
+            border-radius: 5px;
+            font-size: 17px;
+            line-height: 2;
+            box-sizing: border-box;
+            padding: 20px 20px 20px 30px;
+        }
+
+        .feedback-message {
+            font-size: 1.4rem;
+            /* Adjust feedback text size */
+            font-weight: bold;
+            margin-top: 10px;
+            /* Reduced margin */
+            text-align: center;
+            width: 100%;
+            /* Ensure it fits inside the card */
+        }
+
+        .feedback-message.correct {
+            color: #28a745;
+            /* Green for correct feedback */
+        }
+
+        .feedback-message.wrong {
+            color: #dc3545;
+            /* Red for wrong feedback */
+        }
+
+        .navigation button {
+            width: 180px;
+            /* Adjust button size */
+            font-size: 1.2rem;
+            /* Adjust button text size */
+            font-weight: bold;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        #bookmarkDropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            z-index: 1050;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            width: 92%;
+        }
+
+        #bookmarkDropdown.show {
+            display: block;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            padding: 5px 10px;
+            cursor: pointer;
+            color: black;
+            background-color: transparent;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #ddd;
+        }
+
+        .bookmark-icon {
+            width: 36px;
+            /* Set icon width */
+            height: 36px;
+            /* Set icon height */
+            cursor: pointer;
+            /* Pointer cursor for clickability */
+            display: inline-block;
+            /* Align with buttons */
+            vertical-align: middle;
+            /* Ensure vertical alignment */
+        }
+
+        .home-button {
+            cursor: pointer;
+            /* Makes the button clickable */
+            padding: 5px;
+            /* Add padding for a clickable area */
+            border-radius: 5px;
+            /* Rounded corners for better design */
+            transition: background-color 0.3s ease;
+            /* Smooth hover effect */
+        }
+
+        .btn-warning {
+            background-color: #FFD700;
+            /* Golden yellow color */
+            color: #ffffff;
+            /* White text */
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background-color: #E6BE00;
+            /* Darker gold for hover */
+        }
+
+        .button-back {
+            padding: 5px 23px;
+            color: #000;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 5px;
+            font-size: 15px;
+            border: 1px solid lightgray;
+            overflow: hidden;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+        }
+
+        .button-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 15px rgba(0, 0, 0, .6);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            /* Center both buttons */
+            align-items: center;
+            gap: 20px;
+            /* Adds spacing */
+            margin-top: 20px;
+        }
+
+        .button-next {
+            padding: 5px 23px;
+            margin: 20px;
+            color: #000;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 5px;
+            font-size: 15px;
+            border: 1px solid lightgray;
+            overflow: hidden;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+        }
+
+        .button-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 15px rgba(0, 0, 0, .6);
+        }
+
+        nav {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        #categoryDropdown {
+            width: 100%;
+            background-color: white;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        #categoryDropdown option {
+            cursor: pointer;
+            color: black;
+            background-color: transparent;
+            text-decoration: underline;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        span {
+            color: black;
+            font-weight: 600;
+        }
+
+        p#displayQuestion {
+            font-weight: 600;
+        }
+
+        p#correctAnswer {
+            font-weight: 600;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        p#displayExplanation {
+            font-weight: 600;
+        }
+
+        .submit-button {
+            padding: 5px 23px;
+            margin: 20px;
+            color: #000;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 5px;
+            font-size: 15px;
+            border: 1px solid lightgray;
+            overflow: hidden;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            background-color: transparent;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 15px rgba(0, 0, 0, .6);
+        }
+
+        .question-content img {
+            float: right;
+        }
+
+        .header_Himmel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .precision-learning {
+            line-height: 0;
+            font-weight: 600;
+        }
+
+        .precision-learning p {
+            font-size: 2.5rem;
+            font-family: "Times New Roman", Times, serif;
+            word-wrap: break-word;
+        }
+
+        .precision-learning h1 {
+            font-size: 60px;
+        }
+
+
+        @media only screen and (max-width: 1400px) and (min-width:700px) {
+            .header_Himmel {
+                display: block;
+                line-height: 100px;
+                text-align: center;
+            }
+
+        }
+
+        @media only screen and (max-width: 699px) {
+
+            .precision-learning h1 {
+                font-size: 30px;
+            }
+
+            .header_Himmel {
+                display: block;
+                line-height: 100px;
+                text-align: center;
+            }
+
+            .header_Himmel p {
+                font-size: 30px;
+            }
+
+            .precision-learning p {
+                font-size: 18px;
+            }
+        }
+
+        #displayCategory {
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="home-button" onclick="location.href='../homepage.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#c62229" viewBox="0 0 24 24" fill="currentColor" width="36px"
+                height="36px">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+        </div>
+        <div class=" mx-3 ">
+            <h2 class="text-danger Knowledge-para">PRACTICE MODE</h2>
+        </div>
+    </nav>
+    <div class=" col-lg-12 header_Himmel mt-5 mb-5">
+        <div class="precision-learning">
+            <h1 class="text-danger">PRECISION LEARNING</h1>
+            <br>
+            <p class="text-warning ">"The Knowledge Sharing Platform"</p>
+        </div>
+
+
+
+
+        <div class="header d-flex text-center justify-content-center px-5">
+            <img src="./logo.jpeg" alt="Himmel Education Logo">
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="row mb-3 align-items-center ">
+
+            <!-- Category Dropdown -->
+            <div class="col-lg-3 mb-3">
+                <label for="categoryDropdown" class="form-label">Category:</label>
+                <select id="categoryDropdown" class="form-select">
+                    <option value="none" selected>None</option>
+                </select>
+            </div>
+
+            <!-- View Bookmarks Button and Dropdown -->
+            <div class="col-lg-3 mb-3 align-self-end position-relative">
+                <button id="viewBookmarksButton" class="form-select w-100 bookmark-color"
+                    onclick="toggleViewBookmarks()">View Bookmarks</button>
+                <ul id="bookmarkDropdown" class="dropdown-menu"></ul>
+            </div>
+
+            <!-- Search Input -->
+            <div class="col-lg-3 mb-3">
+                <label for="questionNumber" class="form-label">Search:</label>
+                <input type="text" id="questionNumber" autocomplete="off" class="form-control"
+                    placeholder="Search Specific Question">
+            </div>
+
+            <!-- Load Questions Button -->
+            <div class="col-lg-3 mb-3 align-self-end">
+                <button id="loadButton" class="btn btn-danger w-100">Load Question</button>
+            </div>
+
+            <!-- Back and Next Buttons -->
+            <div class=" d-flex ">
+                <div class="nav-buttons">
+                    <a href="#" class="button-back" onclick="navigateQuestion('back')">Back
+                    </a>
+                </div>
+
+                <div class="nav-buttons">
+                    <a href="#" class="button-next" onclick="navigateQuestion('next')">Next</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="question-section">
+        <div class="question-box">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="question-content">
+                        <img id="bookmarkIcon" class="bookmark-icon"
+                            src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg=="
+                            alt="Bookmark" onclick="toggleBookmark()">
+                        <p>
+                            <strong>Question Number:</strong>
+                            <span id="displayQuestionNumber">-</span>
+                        </p>
+                        <p>
+                            <strong>Category:</strong>
+                            <span id="displayCategory">-</span>
+                        </p>
+                        <p>
+                            <strong>Question:</strong>
+                        </p>
+                        <p id="displayQuestion"></p>
+
+                        <!-- Question Image Container -->
+                        <div id="questionImageContainer" style="display:none; margin-top: 10px;">
+                            <img id="questionImage" src="" alt="Question Image" class="img-fluid">
+                        </div>
+
+                        <p>
+                            <strong>Options:</strong>
+                        </p>
+                        <div class="options">
+                            <p id="optionA" onclick="selectAnswer('A')">-</p>
+                            <p id="optionB" onclick="selectAnswer('B')">-</p>
+                            <p id="optionC" onclick="selectAnswer('C')">-</p>
+                            <p id="optionD" onclick="selectAnswer('D')">-</p>
+                        </div>
+                        <button class="submit-button mt-3" onclick="submitAnswer()">Submit</button>
+                        <p id="feedbackMessage" class="feedback-message"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card mt-5 mb-5">
+                <div class="card-body">
+
+                    <div class="explanation-content">
+                        <p class="d-flex justify-content-between">
+                            <strong>Explanation:</strong>
+
+                        </p>
+                        <p id="displayExplanation" style="display: none;">-</p>
+
+                        <!-- Explanation Image Container -->
+                        <div id="explanationImageContainer" style="display:none; margin-top: 10px;">
+                            <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <p id="errorMessage" class="error-message"></p>
+    </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const API_BASE_URL = "http://127.0.0.1:5003";
+    let questions = [];
+    let currentIndex = 0;
+    let selectedAnswer = null;
+    var category = document.getElementById("categoryDropdown").value.trim().toLowerCase();
+
+    const RED_SVG = "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZTYzOTQ2IiBoZWlnaHQ9IjI0IiB3aWR0aD0iMj" +
+        "QiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cG" +
+        "F0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
+    const GRAY_SVG = "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIH" +
+        "ZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aC" +
+        "BkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchCategories().then(() => {
+            // Set default category after loading categories
+            document.getElementById("categoryDropdown").addEventListener("change", function () {
+                category = this.value.trim().toLowerCase();
+            });
+        });
+
+        document.getElementById("loadButton").addEventListener("click", loadQuestions);
+    });
+
+
+    async function fetchCategories() {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/get_categories`);
+            const dropdown = document.getElementById("categoryDropdown");
+            dropdown.innerHTML = '<option value="none" selected>None</option>';
+            response.data.categories.forEach(category => {
+                const option = document.createElement("option");
+                option.value = category.trim().toLowerCase();
+                option.textContent = category;
+                dropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+        }
+    }
+
+    async function fetchFirstQuestionsByCategory() {
+        const selectedCategory = document.getElementById("categoryDropdown").value;
+
+        if (!selectedCategory) {
+            console.error("No category selected.");
+            return;
+        }
+
+        try {
+            const response = await axios.get(
+                `${API_BASE_URL}/get_first_question_by_category?category=${encodeURIComponent(selectedCategory)}`
+            );
+            if (response.data.success) {
+                // Update the questions array with the fetched question
+                questions = [response.data.data]; // Wrap the question in an array
+                currentIndex = 0; // Reset index to 0
+                displayQuestion(questions[currentIndex]); // Display the question
+            } else {
+                console.error("Failed to fetch question for category.");
+            }
+        } catch (error) {
+            
+        }
+    }
+
+
+    async function loadQuestions() {
+
+        const questionNumber = document.getElementById("questionNumber").value;
+        const selectedCategory = document.getElementById("categoryDropdown");
+        const category = selectedCategory.value.trim().toLowerCase();
+        console.log("Selected Category:", category); // Debug log
+
+
+        if (questionNumber !== "") {
+            selectedCategory.value = "none"
+            await loadQuestionByNumber(questionNumber);
+        }
+
+        if (category !== "none") {
+            await fetchFirstQuestionsByCategory(category);
+
+        } else if (questionNumber) {
+            await loadQuestionByNumber(questionNumber);
+        } else {
+            alert("Please enter a question number or select a category.");
+        }
+    }
+
+    async function loadQuestionByNumber(questionNumber) {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/get_question`, {
+                params: {
+                    question_number: questionNumber
+                }
+            });
+            if (response.data.success) {
+                questions = [response.data.data]; // Wrap the question in an array
+
+                currentIndex = 0; // Reset index
+                displayQuestion(questions[currentIndex]);
+            } else {
+                alert(response.data.error || "Question not found.");
+            }
+        } catch (error) {
+            console.error("Error loading question by number:", error);
+        }
+
+    }
+
+    async function navigateQuestion(direction) {
+        const category = document.getElementById("categoryDropdown").value.trim().toLowerCase();
+        let questionNumber = parseInt(document.getElementById("displayQuestionNumber").textContent, 10);
+
+        try {
+            const response = await axios.get(`${API_BASE_URL}/navigate_question`, {
+                params: {
+                    question_number: questionNumber,
+                    direction,
+                    category
+                }
+            });
+
+            if (response.data.success) {
+                const questionData = response.data.data;
+                currentIndex = questions.findIndex(q => q["Question Number"] == questionData["Question Number"]);
+
+                if (currentIndex === -1) {
+                    questions.push(questionData);
+                    currentIndex = questions.length - 1;
+                }
+                displayQuestion(questionData);
+            } else {
+                alert(response.data.error);
+            }
+        } catch (error) {
+
+        }
+    }
+
+    document.querySelectorAll(".options p").forEach(option => {
+        option.addEventListener("contextmenu", event => {
+            event.preventDefault();
+            option.classList.toggle("line-through");
+        });
+    });
+
+    // Function to fetch and update the bookmark status dynamically
+    async function fetchBookmarks() {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/get_bookmarks`);
+
+            const dropdown = document.getElementById("bookmarkDropdown");
+            dropdown.innerHTML = ""; // Clear previous items
+
+            if (response.data.success) {
+                response.data.bookmarks.forEach(bookmark => {
+                    const li = document.createElement("li");
+                    li.textContent = `Q${bookmark.question_number}: ${bookmark.category}`;
+                    dropdown.appendChild(li);
+                });
+            } else {
+                const li = document.createElement("li");
+                li.textContent = "No bookmarks found.";
+                dropdown.appendChild(li);
+            }
+        } catch (error) {
+            console.error("Error fetching bookmarks:", error); // Debugging line
+        }
+    }
+
+    async function updateBookmarkIcon(questionNumber) {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/get_bookmark_status`, {
+                params: {
+                    question_number: questionNumber
+                }
+            });
+            const bookmarkIcon = document.getElementById("bookmarkIcon");
+            if (response.data.success) {
+                bookmarkIcon.src = response.data.bookmarked ?
+                    RED_SVG :
+                    GRAY_SVG;
+            } else {
+                console.error("Failed to fetch bookmark status:", response.data.error);
+            }
+        } catch (error) {
+            console.error("Error fetching bookmark status:", error);
+        }
+    }
+
+    // Function to display a question and update the bookmark icon
+    function displayQuestion(question) {
+        // Reset the UI to clear old data and styles
+        resetUI();
+
+        // Update question details
+        document.getElementById("displayQuestionNumber").textContent = question["Question Number"] || "-";
+        document.getElementById("displayCategory").textContent = question["Category"] || "-";
+        document.getElementById("displayQuestion").textContent = question["Question"] || "-";
+        document.getElementById("optionA").textContent = question["Option A"] || "-";
+        document.getElementById("optionB").textContent = question["Option B"] || "-";
+        document.getElementById("optionC").textContent = question["Option C"] || "-";
+        document.getElementById("optionD").textContent = question["Option D"] || "-";
+
+        // Update Question Image
+        const questionImageContainer = document.getElementById("questionImageContainer");
+        const questionImage = document.getElementById("questionImage");
+        if (question["Question Image"]) {
+            questionImage.src = question["Question Image"];
+            questionImageContainer.style.display = "block";
+        } else {
+            questionImage.src = ""; // Clear the image if not present
+            questionImageContainer.style.display = "none";
+        }
+        if (questions["Explanation Image"]) {
+            explanationImage.src = questions["Explanation Image"];
+            explanationImageContainer.style.display = "block";
+        } else {
+            explanationImage.src = "";
+            explanationImageContainer.style.display = "none";
+        }
+
+
+        // Update Explanation Image
+        const explanationImageContainer = document.getElementById("explanationImageContainer");
+        const explanationImage = document.getElementById("explanationImage");
+        if (question["Explanation Image"]) {
+            explanationImage.src = question["Explanation Image"];
+            explanationImageContainer.style.display = "block";
+        } else {
+            explanationImage.src = ""; // Clear the image if not present
+            explanationImageContainer.style.display = "none";
+        }
+
+        // Reset Explanation Text
+        const explanationElement = document.getElementById("displayExplanation");
+        explanationElement.textContent = question["Explanation"] || "";
+        explanationElement.style.display = "none";
+
+        // Reset Feedback
+        document.getElementById("feedbackMessage").textContent = "";
+        document.getElementById("feedbackMessage").className = "feedback-message";
+
+        // Update Bookmark Icon
+        const bookmarkIcon = document.getElementById("bookmarkIcon");
+        const isBookmarked = bookmarkedQuestions.has(question["Question Number"]);
+        bookmarkIcon.src = isBookmarked ? RED_SVG : GRAY_SVG;
+    }
+
+    function resetUI() {
+        document.querySelectorAll(".options p").forEach(option => {
+            option.classList.remove("correct", "wrong", "selected", "line-through");
+        });
+        document.getElementById("feedbackMessage").textContent = "";
+
+
+
+        // Reset Explanation Text
+        const explanationElement = document.getElementById("displayExplanation");
+        explanationElement.textContent = "";
+        explanationElement.style.display = "none"; // Ensure it’s hidden if empty
+
+        // Reset Explanation Image
+        const explanationImage = document.getElementById("explanationImage");
+        const explanationImageContainer = document.getElementById("explanationImageContainer");
+        explanationImage.src = ""; // Clear the explanation image if any
+        explanationImageContainer.style.display = "none"; // Hide the explanation image container
+    }
+
+    function selectAnswer(option) {
+        selectedAnswer = option;
+        resetUI();
+        document.getElementById(`option${option}`).classList.add("selected");
+    }
+
+    function submitAnswer() {
+        if (!selectedAnswer) {
+            alert("Please select an answer before submitting.");
+            return;
+        }
+
+        if (currentIndex < 0 || currentIndex >= questions.length) {
+            alert("Invalid question index. Please reload the questions.");
+            return;
+        }
+
+        if (!selectedAnswer) {
+            alert("Please select an answer.");
+            return;
+        }
+
+        const correctAnswer = questions[currentIndex]["Correct Answer"];
+        const feedback = document.getElementById("feedbackMessage");
+
+        // Reset previous feedback styles
+        resetUI();
+
+        // Provide feedback for the selected answer
+        if (selectedAnswer === correctAnswer) {
+            document.getElementById(`option${selectedAnswer}`).classList.add("correct");
+            document.getElementById("feedbackMessage").textContent = "Correct!";
+            document.getElementById("feedbackMessage").style.color = "green"
+        } else {
+            document.getElementById(`option${selectedAnswer}`).classList.add("wrong");
+            document.getElementById("feedbackMessage").textContent = "Wrong!";
+            document.getElementById("feedbackMessage").style.color = "red"
+
+            // Highlight the correct answer
+            document.getElementById(`option${correctAnswer}`).classList.add("correct");
+        }
+
+        // Show explanation
+        const explanationElement = document.getElementById("displayExplanation");
+        explanationElement.style.display = "block";
+        const explanationImage = document.getElementById("explanationImage");
+        const explanationImageContainer = document.getElementById("explanationImageContainer");
+
+        if (questions[currentIndex]["Explanation"]) {
+            explanationElement.textContent = questions[currentIndex]["Explanation"];
+            explanationElement.style.display = "block";
+        } else {
+            explanationElement.textContent = "-";
+            explanationElement.style.display = "none";
+        }
+
+        if (questions[currentIndex]["Explanation Image"]) {
+            explanationImage.src = questions[currentIndex]["Explanation Image"];
+            explanationImageContainer.style.display = "block";
+        } else {
+            explanationImage.src = "";
+            explanationImageContainer.style.display = "none";
+        }
+    }
+
+    async function toggleBookmark() {
+        const questionNumber = parseInt(document.getElementById("displayQuestionNumber").textContent.trim());
+        const category = document.getElementById("displayCategory").textContent.trim();
+
+        if (!questionNumber) {
+            alert("No question is loaded to bookmark.");
+            return;
+        }
+
+        try {
+            const response = await axios.post(`${API_BASE_URL}/toggle_bookmark`, {
+                question_number: questionNumber,
+                category: category
+            });
+
+            if (response.data.success) {
+                const isBookmarked = response.data.bookmarked;
+
+                // Update the local Set
+                if (isBookmarked) {
+                    bookmarkedQuestions.add(questionNumber);
+                } else {
+                    bookmarkedQuestions.delete(questionNumber);
+                }
+
+                // Update the current icon dynamically
+                const bookmarkIcon = document.getElementById("bookmarkIcon");
+                bookmarkIcon.src = isBookmarked ? RED_SVG : GRAY_SVG;
+
+
+            } else {
+                alert("Error updating bookmark status.");
+            }
+        } catch (error) {
+            console.error("Error toggling bookmark:", error);
+        }
+    }
+    let bookmarkedQuestions = new Set();
+
+    async function fetchBookmarks() {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/get_bookmarks`);
+            if (response.data.success) {
+                const bookmarks = response.data.bookmarks;
+                const bookmarkDropdown = document.getElementById("bookmarkDropdown");
+                bookmarkDropdown.innerHTML = ""; // Clear existing bookmarks
+
+                // Populate the dropdown with the latest bookmarks
+                bookmarks.forEach(bookmark => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `Q${bookmark.question_number}: ${bookmark.category}`;
+                    listItem.onclick = () => {
+                        fetchBookmarkedQuestion(bookmark.question_number, bookmark.category);
+                        bookmarkDropdown.classList.remove("show"); // Close the dropdown
+                    };
+                    bookmarkDropdown.appendChild(listItem);
+                });
+
+                // Update the global bookmarked questions list
+                const bookmarkedQuestionNumbers = new Set(bookmarks.map(b => b.question_number));
+
+                // Call the function to update icons based on the fetched bookmarks
+                updateBookmarkIcons(bookmarkedQuestionNumbers);
+            } else {
+                console.error("Failed to fetch bookmarks:", response.data.error);
+            }
+        } catch (error) {
+            console.error("Error fetching bookmarks:", error);
+        }
+    }
+
+    async function fetchBookmarkedQuestion(questionNumber, category) {
+        try {
+            // Reset the Category dropdown to "none"
+            document.getElementById("categoryDropdown").value = "none";
+
+            // Clear the Search input
+            document.getElementById("questionNumber").value = "";
+
+            // Fetch the bookmarked question
+            const response = await axios.get(
+                `${API_BASE_URL}/get_question?question_number=${encodeURIComponent(questionNumber)}&category=${encodeURIComponent(category)}`
+            );
+            if (response.data.success) {
+                // Update the questions array with the fetched question
+                questions = [response.data.data]; // Wrap the question in an array
+                currentIndex = 0; // Reset index to 0
+                displayQuestion(questions[currentIndex]); // Display the question
+            } else {
+                console.error("Failed to fetch bookmarked question:", response.data.error);
+            }
+        } catch (error) {
+            console.error("Error fetching bookmarked question:", error);
+        }
+    }
+
+    async function fetchBookmarksAndSyncIcons() {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/get_bookmarks`);
+            if (response.data.success) {
+                // Update the Set with all bookmarked question numbers
+                bookmarkedQuestions.clear();
+                response.data.bookmarks.forEach(bookmark => {
+                    bookmarkedQuestions.add(parseInt(bookmark.question_number, 10));
+                });
+
+                // Update icons dynamically for all questions currently displayed
+                updateBookmarkIcons(bookmarkedQuestions);
+            } else {
+                console.error("Failed to fetch bookmarks:", response.data.error);
+            }
+        } catch (error) {
+            console.error("Error fetching bookmarks:", error);
+        }
+    }
+
+    function updateBookmarkIcons(bookmarkedQuestions) {
+        const questionElements = document.querySelectorAll("[data-question-number]");
+        questionElements.forEach(element => {
+            const questionNumber = parseInt(element.dataset.questionNumber, 10);
+            const bookmarkIcon = element.querySelector(".bookmark-icon");
+
+            // Set the icon color based on whether the question is bookmarked
+            if (bookmarkedQuestions.has(questionNumber)) {
+                bookmarkIcon.src = RED_SVG;
+            } else {
+                bookmarkIcon.src = GRAY_SVG;
+            }
+        });
+    }
+
+    function toggleViewBookmarks() {
+        const dropdown = document.getElementById("bookmarkDropdown");
+
+        dropdown.classList.toggle("show");
+
+        if (dropdown.classList.contains("show")) {
+            fetchBookmarks(); // Fetch bookmarks when dropdown is shown
+
+            document.addEventListener("click", closeDropdownOnClickOutside);
+        } else {
+            document.removeEventListener("click", closeDropdownOnClickOutside);
+        }
+    }
+
+    function closeDropdownOnClickOutside(event) {
+        const dropdown = document.getElementById("bookmarkDropdown");
+        const button = document.getElementById("viewBookmarksButton");
+
+        // Close dropdown if the click is outside both the button and dropdown
+        if (!dropdown.contains(event.target) && event.target !== button) {
+            dropdown.classList.remove("show");
+            document.removeEventListener("click", closeDropdownOnClickOutside);
+        }
+    }
+</script>
+
+</body>
+
+</html>

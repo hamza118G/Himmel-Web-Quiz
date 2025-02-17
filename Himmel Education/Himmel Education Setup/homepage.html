@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Homepage</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        /* General body styling */
+        body {
+            font-family: "Poppins", serif;
+            font-weight: 100;
+            font-style: normal;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        /* Logo and Title */
+        .header {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+            justify-content: space-between;
+
+
+        }
+
+        .header h1 {
+
+            font-weight: bold;
+            color: #e63946;
+            font-size: 60px;
+        }
+
+        .header h2 {
+            font-size: 1.2rem;
+            font-weight: normal;
+            color: #333;
+        }
+
+        /* Container for the buttons */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* Two buttons per row */
+            gap: 30px;
+            justify-content: center;
+            /* Align buttons in center */
+        }
+
+        /* Button styles */
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 260px;
+            /* Square width */
+            height: 260px;
+            /* Square height */
+            text-decoration: none;
+            color: white;
+            background-color: #1e5f75;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+
+            position: relative;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Images inside buttons */
+        .button img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures full visibility of the image */
+            z-index: 1;
+        }
+
+        /* Text overlay */
+        .button span {
+            position: relative;
+            z-index: 2;
+            font-size: 1.8rem;
+            /* Larger font for button text */
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 4px black;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent background */
+            border-radius: 5px;
+        }
+
+        nav {
+            padding: 40px;
+        }
+
+        .header-logo {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 2 columns for smaller screens (max-width: 900px) */
+        @media (max-width: 970px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 1 column for mobile screens (max-width: 600px) */
+        @media (max-width: 640px) {
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+        }
+
+        .header_img img {
+            height: 4rem;
+        }
+
+        .header-logo img {
+            height: 7rem;
+        }
+
+        .precision-learning {
+            line-height: 0;
+            font-weight: 600;
+        }
+
+        .precision-learning p {
+            font-size: 1.5rem;
+            font-family: inherit;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 880px) {
+            .header {
+                display: block;
+                text-align: center;
+            }
+
+            .precision-learning p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <nav>
+
+
+        <div class="header  mb-5 mt-3 ">
+            <div class="precision-learning">
+                <h1 class="text-danger">PRECISION LEARNING</h1>
+                <br>
+                <p class="text-warning ">"The Knowledge Sharing Platform"</p>
+            </div>
+
+            <div class="header-logo">
+                <img src="logo.jpeg" alt="Himmel Education Logo">
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- Buttons Container -->
+    <div class="container">
+        <!-- Question Bank -->
+        <a href="Question Bank/question_bank_ui.html" class="button">
+            <img src="question art.jpg" alt="Question Bank">
+            <span>Question Bank</span>
+        </a>
+
+        <!-- Practice Mode -->
+        <a href="Practice Mode/practice_mode.html" class="button">
+            <img src="practice art.jpg" alt="Practice Mode">
+            <span>Practice Mode</span>
+        </a>
+
+        <!-- Exam Mode -->
+        <a href="Himmel/himmel.html" class="button">
+            <img src="exam art.jpg" alt="Exam Mode">
+            <span>Exam Mode</span>
+        </a>
+
+        <!-- Bookmarks -->
+        <a href="Bookmarks/bookmarks.html" class="button">
+            <img src="bookmark.jpg" alt="Bookmarks">
+            <span>My Bookmarks</span>
+        </a>
+    </div>
+</body>
+
+</html>
