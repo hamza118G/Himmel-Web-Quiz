@@ -14,9 +14,8 @@
             font-family: "Poppins", serif;
             font-weight: 100;
             font-style: normal;
-            margin: 0;
-            padding: 0;
-
+            margin: 20px;
+           
         }
 
         /* Logo and Title */
@@ -33,7 +32,7 @@
 
             font-weight: bold;
             color: #e63946;
-            font-size: 60px;
+            font-size: 40px;
         }
 
         .header h2 {
@@ -104,90 +103,96 @@
             border-radius: 5px;
         }
 
-        nav {
-            padding: 40px;
+       
+        .precision-learning p {
+            font-size: 1.75rem;
+            font-family: math;
+            font-style: italic;
+            word-wrap: break-word;
         }
-
         .header-logo {
             display: flex;
             justify-content: center;
             text-align: center;
         }
 
+     
+        .top-header{
+           
+            display: flex;
+            justify-content: space-between;
+        }
+        .home-button {
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .header img {
+            float: right;
+            height: 8rem;
+            margin-bottom: 5px;
+        }
         @media (max-width: 1200px) {
-            .container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+    .container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 
-        /* 2 columns for smaller screens (max-width: 900px) */
-        @media (max-width: 970px) {
-            .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+/* 2 columns for smaller screens (max-width: 900px) */
+@media (max-width: 970px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-        /* 1 column for mobile screens (max-width: 600px) */
-        @media (max-width: 640px) {
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
+/* 1 column for mobile screens (max-width: 600px) */
+@media (max-width: 640px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
 
-            .header h1 {
-                font-size: 25px;
-            }
-        }
+.Home-logo img{
+    width: 300px;
+    height: 56px;
+}
 
-        .header_img img {
-            height: 4rem;
-        }
 
-        .header-logo img {
-            height: 7rem;
-        }
-
-        .precision-learning {
-            line-height: 0;
-            font-weight: 600;
-        }
-
-        .precision-learning p {
-            font-size: 1.5rem;
-            font-family: inherit;
-            word-wrap: break-word;
-        }
-
-        @media (max-width: 880px) {
-            .header {
-                display: block;
-                text-align: center;
-            }
-
-            .precision-learning p {
-                font-size: 1rem;
-            }
-        }
+@media (max-width: 720px) {
+    .header {
+        display: block;
+        text-align: center;
+        align-items: center;
+    }
+}
     </style>
 </head>
 
 <body>
+    <div class="top-header">
+        <div class="home-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#c62229" viewBox="0 0 24 24" fill="currentColor" width="36px"
+                height="36px">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+        </div>
+       
+    </div>
     <!-- Header Section -->
     <nav>
 
 
-        <div class="header  mb-5 mt-3 ">
-            <div class="precision-learning">
-                <h1 class="text-danger">PRECISION LEARNING</h1>
-                <br>
-                <p class="text-warning ">"The Knowledge Sharing Platform"</p>
-            </div>
-
+        <div class="header  mb-2 mt-2 ">
             <div class="header-logo">
-                <img src="logo.jpeg" alt="Himmel Education Logo">
+                <img src="logo.png" alt="Himmel Education Logo">
             </div>
-
+            <div class=" mx-3 Home-logo">
+                <img src="./Home Page.png" alt="">
+            </div>
         </div>
 
     </nav>

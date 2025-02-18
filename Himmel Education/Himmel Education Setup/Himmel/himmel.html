@@ -35,7 +35,7 @@
 
         .header img {
             float: right;
-            height: 7rem;
+            height: 8rem;
             margin-bottom: 5px;
         }
 
@@ -192,62 +192,42 @@
 
         .precision-learning {
             line-height: 0;
-            font-weight: 600;
+            
         }
 
         .precision-learning p {
-            font-size: 2.5rem;
-            font-family: "Times New Roman", Times, serif;
+            font-size: 1.75rem;
+            font-family: math;
+            font-style: italic;
             word-wrap: break-word;
         }
 
         .precision-learning h1 {
-            font-size: 60px;
+            font-size: 40px;
         }
 
 
-        @media only screen and (max-width: 1400px) and (min-width:700px) {
-            .header_Himmel {
-                display: block;
-                line-height: 100px;
-                text-align: center;
-            }
-
-            .Knowledge-para {
-                padding-top: 20px;
-                padding-bottom: 20px;
-                font-size: 60px;
-            }
-        }
-
-        @media only screen and (max-width: 699px) {
-            .Knowledge-para {
-                padding-top: 20px;
-                padding-bottom: 20px;
-                font-size: 30px;
-            }
-
-            .precision-learning h1 {
-                font-size: 30px;
-            }
-
-            .header_Himmel {
-                display: block;
-                line-height: 100px;
-                text-align: center;
-            }
-
-            .header_Himmel p {
-                font-size: 30px;
-            }
-
-            .precision-learning p {
-                font-size: 18px;
-            }
-        }
+       
 
         #displayCategory {
             text-transform: uppercase;
+        }
+        .stats-card p{
+            font-weight: 600;
+        }
+        .stats-card span{
+            color: #e63946;
+        }
+        .module img{
+            width: 100px;
+            height: 30px;
+            text-align: center;
+        }
+        .module{
+            text-align: center;
+        }
+        .exam-logo img{
+            width: 300px;
         }
     </style>
 </head>
@@ -262,22 +242,20 @@
             </svg>
         </div>
 
-        <div class=" mx-3 ">
-            <h2 class="text-danger Knowledge-para">EXAM MODE</h2>
-        </div>
+        
     </nav>
-    <div class=" col-lg-12 header_Himmel mt-5 mb-5">
-        <div class="precision-learning">
-            <h1 class="text-danger">PRECISION LEARNING</h1>
-            <br>
-            <p class="text-warning ">"The Knowledge Sharing Platform"</p>
+    <div class=" col-lg-12 header_Himmel mt-2 mb-2">
+       
+
+
+        <div class="header d-flex text-center justify-content-center ">
+            <img src="logo.png" alt="Himmel Education Logo">
         </div>
 
-
-        <div class="header d-flex text-center justify-content-center px-5">
-            <img src="./logo.jpeg" alt="Himmel Education Logo">
+        <div class=" mx-3  exam-logo">
+            <img src="./Exam Mode (1).png" alt="">
         </div>
-
+        
     </div>
 
     <div class="container">
@@ -307,10 +285,18 @@
                 <h5>Incorrect Answers</h5>
                 <h2 id="incorrectAnswers">0</h2>
             </div>
+            <div class="stats-card">
+                <p><Span>Above 90</Span> is Excellent</p>
+                <p><span>75-90</span> is Good</p>
+                <p><span>Below 75</span> Needs Improvement</p>
+            </div>
         </div>
 
         <div class="chart-container">
             <canvas id="accuracyChart"></canvas>
+        </div>
+        <div class="module">
+            <img src="./Module.png" alt="">
         </div>
         <p class=" text-center mt-5 question-input">Select Number of Questions</p>
         <div class="text-center mt-3 mb-5">
@@ -432,8 +418,8 @@
             // Populate HTML with stats
             document.getElementById("quizzesCompleted").textContent = data.total_quizzes || 0;
             document.getElementById("questionsAttempted").textContent = totalQuestions;
-            document.getElementById("correctAnswers").textContent = `${correctPercentage.toFixed(2)}%`;
-            document.getElementById("incorrectAnswers").textContent = `${incorrectPercentage.toFixed(2)}%`;
+            document.getElementById("correctAnswers").textContent = `${correctPercentage.toFixed(0)}%`;
+            document.getElementById("incorrectAnswers").textContent = `${incorrectPercentage.toFixed(0)}%`;
             document.getElementById("totalQuestions").textContent = totalNumberQuestion
 
             initializeCharts(data.category_scores);
@@ -447,7 +433,7 @@
 
     function initializeCharts(categoryScores) {
         const ctx = document.getElementById("accuracyChart").getContext("2d");
-        const labels = Object.keys(categoryScores);
+        const labels = Object.keys(categoryScores)
         const data = labels.map(cat => categoryScores[cat] ?.correct / Math.max(1, categoryScores[cat] ?.attempted || 1) * 100);
 
         new Chart(ctx, {
@@ -455,10 +441,11 @@
             data: {
                 labels,
                 datasets: [{
-                    label: "Accuracy (%)",
+                    label: "Score (%)",
                     data,
                     borderColor: "#007bff",
-                    backgroundColor: "rgba(0, 123, 255, 0.1)"
+                    backgroundColor: "rgba(0, 123, 255, 0.1)",
+                    
                 }]
             },
             options: {
@@ -472,7 +459,8 @@
                         ticks: {
                             callback: function (value, index) {
                                 return labels[index].toUpperCase(); // Use the label at the given index
-                            }
+                            },
+                            font: { size: 1, } 
                         }
                     }
                 }

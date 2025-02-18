@@ -42,7 +42,6 @@
             background-color: white;
             border: 1px solid #e9ecef;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             font-weight: 600;
         }
 
@@ -55,20 +54,20 @@
         }
 
         .selected {
-            background-color: lightgreen;
+            background-color: #f48c35;
             border-color: lightgray;
         }
 
         .correct {
-            background-color: #d4edda;
-            border-color: #28a745;
-            color: #155724;
+            background-color: #28a745;
+            border-color: lightgray;
+            color: white;
         }
 
         .incorrect {
-            background-color: #f8d7da;
-            border-color: #dc3545;
-            color: #721c24;
+            background-color: #dc3545;
+            border-color: #c82333 ;
+            color: white;
         }
 
         .strike {
@@ -98,12 +97,6 @@
             background-color: transparent;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            margin: 10px 0;
-        }
-
         .exam-total {
             font-weight: 600;
         }
@@ -116,6 +109,16 @@
         .go-back-button:hover {
             box-shadow: 0 12px 15px rgba(0, 0, 0, .6);
             transform: translateY(-2px)
+        }
+        .exam-img {
+            width: 400px;
+            height: 400px;
+            text-align: center;
+        }
+        .exam-ques-img{
+            width: 400px;
+            height: 400px;
+            text-align: center;
         }
     </style>
 </head>
@@ -212,7 +215,7 @@
                         questionDiv.innerHTML = `
                         <h5>Question ${index + 1}:</h5>
                         <p>${question.Question}</p>
-                        ${question["Question Image"] ? `<img src="${question["Question Image"]}" alt="Question Image">` : ""}
+                        ${question["Question Image"] ? `<img class="exam-ques-img" src="${question["Question Image"]}" alt="Question Image">` : ""}
                         <div class="options">
                             <div class="option" data-index="${index}" data-option="A">${question["Option A"]}</div>
                             <div class="option" data-index="${index}" data-option="B">${question["Option B"]}</div>
@@ -248,11 +251,8 @@
             }
             document.getElementById("submitExam").addEventListener("click", async () => {
                 // Identify unanswered questions based on their localized numbering in the current exam
-                const missedQuestions = questions
-                    .map((_, index) => index +
-                    1) // Map to localized question numbers (1-based index)
-                    .filter((questionNumber) => !userAnswers[questionNumber -
-                    1]); // Check if unanswered
+                const missedQuestions = questions.map((_, index) => index + 1) // Map to localized question numbers (1-based index)
+                    .filter((questionNumber) => !userAnswers[questionNumber -1]); // Check if unanswered
 
                 if (missedQuestions.length > 0) {
                     // Display the missed localized question numbers
@@ -338,7 +338,7 @@
                     return "correct"; // Correct answer is green
                         if (option === result.user_answer && option !== result.correct_answer)
                             return "incorrect"; // User's wrong answer is red
-                        return ""; // Default styling for other options
+                    return ""; // Default styling for other options
                     };
 
                     resultDiv.innerHTML = `
@@ -347,7 +347,7 @@
                 ${bookmarkIcon} <!-- Place icon at the right -->
             </div>
             <p>${result.question}</p>
-            ${result.question_image ? `<img src="${result.question_image}" alt="Question Image">` : ""}
+            ${result.question_image ? `<img class="exam-ques-img" src="${result.question_image}" alt="Question Image">` : ""}
             <div class="options">
                 <div class="option ${getClass("A")}">${result.options["A"]}</div>
                 <div class="option ${getClass("B")}">${result.options["B"]}</div>
@@ -355,8 +355,8 @@
                 <div class="option ${getClass("D")}">${result.options["D"]}</div>
             </div>
             <p>${result.is_correct ? "✅ Correct" : "❌ Incorrect"}</p>
-            <p>Explanation: ${result.explanation}</p>
-            ${result.explanation_image ? `<img src="${result.explanation_image}" alt="Explanation Image">` : ""}
+             <p>Explanation: ${result.explanation}</p>
+            ${result.explanation_image ? `<img class = "exam-img" src="${result.explanation_image}" alt="Explanation Image">` : ""}
         `;
 
                     questionsContainer.appendChild(resultDiv);

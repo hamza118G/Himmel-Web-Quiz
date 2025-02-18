@@ -30,7 +30,7 @@
         }
 
         .header img {
-            height: 7rem;
+            height: 8rem;
             margin-bottom: 5px;
         }
 
@@ -188,11 +188,10 @@
             height: 36px;
             /* Set icon height */
             cursor: pointer;
-            /* Pointer cursor for clickability */
-            display: inline-block;
             /* Align with buttons */
             vertical-align: middle;
             /* Ensure vertical alignment */
+            float: right;
         }
 
         .home-button {
@@ -335,8 +334,10 @@
             box-shadow: 0 12px 15px rgba(0, 0, 0, .6);
         }
 
-        .question-content img {
-            float: right;
+        .question-content .que-img {
+            text-align: center;
+            width: 400px;
+            height: 400px;
         }
 
         .header_Himmel {
@@ -347,52 +348,30 @@
 
         .precision-learning {
             line-height: 0;
-            font-weight: 600;
+           
         }
 
         .precision-learning p {
-            font-size: 2.5rem;
-            font-family: "Times New Roman", Times, serif;
+            font-size: 1.75rem;
+            font-family: math;
+            font-style: italic;
             word-wrap: break-word;
         }
 
         .precision-learning h1 {
-            font-size: 60px;
-        }
-
-
-        @media only screen and (max-width: 1400px) and (min-width:700px) {
-            .header_Himmel {
-                display: block;
-                line-height: 100px;
-                text-align: center;
-            }
-
-        }
-
-        @media only screen and (max-width: 699px) {
-
-            .precision-learning h1 {
-                font-size: 30px;
-            }
-
-            .header_Himmel {
-                display: block;
-                line-height: 100px;
-                text-align: center;
-            }
-
-            .header_Himmel p {
-                font-size: 30px;
-            }
-
-            .precision-learning p {
-                font-size: 18px;
-            }
+            font-size: 40px;
         }
 
         #displayCategory {
             text-transform: uppercase;
+        }
+        #explanationImageContainer .exp-img{
+            text-align: center;
+            width: 400px;
+            height: 400px;
+        }
+        .test-logo img{
+            width: 300px;
         }
     </style>
 </head>
@@ -405,24 +384,19 @@
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
         </div>
-        <div class=" mx-3 ">
-            <h2 class="text-danger Knowledge-para">PRACTICE MODE</h2>
-        </div>
+        
     </nav>
-    <div class=" col-lg-12 header_Himmel mt-5 mb-5">
-        <div class="precision-learning">
-            <h1 class="text-danger">PRECISION LEARNING</h1>
-            <br>
-            <p class="text-warning ">"The Knowledge Sharing Platform"</p>
+    <div class=" col-lg-12 header_Himmel mt-2 mb-2">
+       
+
+
+
+        <div class="header d-flex text-center justify-content-center ">
+            <img src="logo.png" alt="Himmel Education Logo">
         </div>
-
-
-
-
-        <div class="header d-flex text-center justify-content-center px-5">
-            <img src="./logo.jpeg" alt="Himmel Education Logo">
+        <div class=" mx-3 test-logo">
+            <img src="./Test Paper.png" alt="">
         </div>
-
     </div>
 
     <div class="container">
@@ -483,24 +457,20 @@
                         <p>
                             <strong>Question Number:</strong>
                             <span id="displayQuestionNumber">-</span>
-                        </p>
-                        <p>
+                           <em class="mx-5">|</em>
                             <strong>Category:</strong>
                             <span id="displayCategory">-</span>
                         </p>
-                        <p>
-                            <strong>Question:</strong>
-                        </p>
+                        
+                       
                         <p id="displayQuestion"></p>
 
                         <!-- Question Image Container -->
-                        <div id="questionImageContainer" style="display:none; margin-top: 10px;">
-                            <img id="questionImage" src="" alt="Question Image" class="img-fluid">
+                        <div id="questionImageContainer" style="display:none; margin-top: 10px; text-align: center;">
+                            <img id="questionImage" src="" alt="Question Image" class="img-fluid  que-img">
                         </div>
 
-                        <p>
-                            <strong>Options:</strong>
-                        </p>
+                       
                         <div class="options">
                             <p id="optionA" onclick="selectAnswer('A')">-</p>
                             <p id="optionB" onclick="selectAnswer('B')">-</p>
@@ -525,8 +495,8 @@
                         <p id="displayExplanation" style="display: none;">-</p>
 
                         <!-- Explanation Image Container -->
-                        <div id="explanationImageContainer" style="display:none; margin-top: 10px;">
-                            <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid">
+                        <div id="explanationImageContainer" style="display:none; margin-top: 10px; text-align: center;">
+                            <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid exp-img">
                         </div>
                     </div>
                 </div>

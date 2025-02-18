@@ -32,7 +32,7 @@
 
         .header img {
             float: right;
-            height: 7rem;
+            height: 8rem;
             margin-bottom: 5px;
         }
 
@@ -85,10 +85,10 @@
             padding: 20px 20px 20px 30px;
         }
 
-        #questionImage,
-        #explanationImage {
-            max-width: 100%;
-            height: auto;
+        .question-content .que-img {
+            text-align: center;
+            width: 400px;
+            height: 400px;
         }
 
         .options li {
@@ -160,7 +160,7 @@
             width: 36px;
             height: 36px;
             cursor: pointer;
-            display: inline-block;
+           float: right;
             vertical-align: middle;
         }
 
@@ -298,10 +298,6 @@
             font-style: italic;
         }
 
-        .question-content img {
-            float: right;
-        }
-
         .header_Himmel {
             display: flex;
             justify-content: space-between;
@@ -310,62 +306,34 @@
 
         .precision-learning {
             line-height: 0;
-            font-weight: 600;
+            
         }
 
         .precision-learning p {
-            font-size: 2.5rem;
-            font-family: "Times New Roman", Times, serif;
+            font-size: 1.75rem;
+            font-family: math;
+            font-style: italic;
             word-wrap: break-word;
         }
 
         .precision-learning h1 {
-            font-size: 60px;
+            font-size: 40px;
         }
 
 
-        @media only screen and (max-width: 1400px) and (min-width:700px) {
-            .header_Himmel {
-                display: block;
-                line-height: 100px;
-                text-align: center;
-            }
-
-            .Knowledge-para {
-                padding-top: 20px;
-                padding-bottom: 20px;
-                font-size: 60px;
-            }
-        }
-
-        @media only screen and (max-width: 699px) {
-            .Knowledge-para {
-                padding-top: 20px;
-                padding-bottom: 20px;
-                font-size: 30px;
-            }
-
-            .precision-learning h1 {
-                font-size: 30px;
-            }
-
-            .header_Himmel {
-                display: block;
-                line-height: 100px;
-                text-align: center;
-            }
-
-            .header_Himmel p {
-                font-size: 30px;
-            }
-
-            .precision-learning p {
-                font-size: 18px;
-            }
-        }
+     
 
         #displayCategory {
             text-transform: uppercase;
+        }
+        #explanationImageContainer .exp-img{
+            text-align: center;
+            width: 400px;
+            height: 400px;
+        }
+        .question-logo img{
+            width: 300px;
+          height: 56px;
         }
     </style>
 </head>
@@ -378,22 +346,22 @@
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
         </div>
-        <div class=" mx-3 ">
-            <h2 class="text-danger Knowledge-para">QUESTION MODE</h2>
-        </div>
+       
     </nav>
-    <div class=" col-lg-12 header_Himmel mt-5 mb-5">
-        <div class="precision-learning">
-            <h1 class="text-danger">PRECISION LEARNING</h1>
-            <br>
-            <p class="text-warning ">"The Knowledge Sharing Platform"</p>
+    <div class=" col-lg-12 header_Himmel mt-2 mb-2">
+        
+
+
+        <div class="header d-flex text-center justify-content-center">
+            <img src="./logo.png" alt="Himmel Education Logo">
         </div>
 
 
-        <div class="header d-flex text-center justify-content-center px-5">
-            <img src="./logo.jpeg" alt="Himmel Education Logo">
-        </div>
+        <div class=" mx-3 question-logo ">
+            <img src="./Question Bank.png" alt="">
+         </div>
 
+         
     </div>
 
     <div class="container">
@@ -433,18 +401,12 @@
             <!-- Navigation Buttons: Back and Next -->
             <div class=" d-flex ">
                 <div class="nav-buttons">
-                    <a href="#" class="button-back" onclick="navigateQuestion('back')">
-
-                        Back
-                    </a>
+                    <a href="#" class="button-back" onclick="navigateQuestion('back')">Back</a>
                 </div>
 
 
                 <div class="nav-buttons">
-                    <a href="#" class="button-next" onclick="navigateQuestion('next')">
-
-                        Next
-                    </a>
+                    <a href="#" class="button-next" onclick="navigateQuestion('next')">Next</a>
                 </div>
             </div>
         </div>
@@ -462,17 +424,23 @@
                         <img id="bookmarkIcon" class="bookmark-icon"
                             src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg=="
                             alt="Bookmark" onclick="toggleBookmark()">
-                        <p><strong>Question Number:</strong> <span id="displayQuestionNumber">-</span></p>
-                        <p><strong>Category:</strong> <span id="displayCategory">-</span></p>
-                        <p><strong>Question:</strong></p>
+                        <p>
+                            <strong>Question Number:</strong>
+                             <span id="displayQuestionNumber">-</span>
+                             <em class="mx-5">|</em>
+                             <strong>Category:</strong>
+                             <span id="displayCategory">-</span>
+                    </p>
+                       
+                       
                         <p id="displayQuestion"></p>
-                        <div id="questionImageContainer" style="display:none; margin-top: 10px;">
-                            <img id="questionImage" src="" alt="Question Image" class="img-fluid"
+                        <div id="questionImageContainer" style="display:none; margin-top: 10px; text-align: center;">
+                            <img id="questionImage" src="" alt="Question Image" class="img-fluid que-img"
                                 style="cursor: pointer;" onclick="openModal('questionImage')">
                         </div>
 
                         <div>
-                            <p><strong>Options:</strong></p>
+                           
                             <div class="options">
                                 <p id="optionA">-</p>
                                 <p id="optionB">-</p>
@@ -493,8 +461,8 @@
 
                         </p>
                         <p id="displayExplanation">-</p>
-                        <div id="explanationImageContainer" style="display:none; margin-top: 10px;">
-                            <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid"
+                        <div id="explanationImageContainer" style="display:none; margin-top: 10px; text-align: center;">
+                            <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid exp-img"
                                 style="cursor: pointer;" onclick="openModal('explanationImage')">
                         </div>
 
