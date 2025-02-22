@@ -59,7 +59,7 @@
         .question-content {
             flex: 1.5;
             /* Adjust width of the question section */
-            margin-right: 20px;
+            margin-right: 35px;
             font-size: 17px;
             /* Reduced size by 30% (from 2rem to 1.4rem) */
             line-height: 1.4;
@@ -220,7 +220,7 @@
 
         .button-back {
             padding: 5px 23px;
-            color: #000;
+            color: red;
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 5px;
@@ -243,14 +243,12 @@
             /* Center both buttons */
             align-items: center;
             gap: 20px;
-            /* Adds spacing */
-            margin-top: 20px;
         }
 
         .button-next {
             padding: 5px 23px;
             margin: 20px;
-            color: #000;
+            color: red;
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 5px;
@@ -336,7 +334,7 @@
 
         .question-content .que-img {
             text-align: center;
-            width: 400px;
+            width: 600px;
             height: 400px;
         }
 
@@ -372,7 +370,15 @@
         }
         .test-logo img{
             width: 300px;
+            height: 47px;
         }
+        .nav-ques {
+    padding: 0 5rem;
+}
+.displayQuestion-BG {
+    background-color: #c8f0f3;
+    padding: 20px 10px;
+}
     </style>
 </head>
 
@@ -383,6 +389,9 @@
                 height="36px">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
+        </div>
+        <div class=" container d-flex justify-content-end ">
+            <p style="color: darkgray; font-weight: 400;">A. Jamshed 2025</p>
         </div>
         
     </nav>
@@ -395,7 +404,7 @@
             <img src="logo.png" alt="Himmel Education Logo">
         </div>
         <div class=" mx-3 test-logo">
-            <img src="./Test Paper.png" alt="">
+            <img src="./Practice Mode.png" alt="">
         </div>
     </div>
 
@@ -430,47 +439,51 @@
             </div>
 
             <!-- Back and Next Buttons -->
-            <div class=" d-flex ">
-                <div class="nav-buttons">
-                    <a href="#" class="button-back" onclick="navigateQuestion('back')">Back
-                    </a>
-                </div>
-
-                <div class="nav-buttons">
-                    <a href="#" class="button-next" onclick="navigateQuestion('next')">Next</a>
-                </div>
-            </div>
+           
         </div>
     </div>
 
     </div>
+
+
+    <div class=" d-flex justify-content-between nav-ques align-items-center">
+        <div>
+            <p>
+                <strong>Question Number:</strong>
+                 <span id="displayQuestionNumber">-</span>
+                 <em class="mx-5">|</em>
+                 <strong>Category:</strong>
+                 <span id="displayCategory">-</span>
+        </p>
+    </div>
+        <div class="d-flex ">        
+        <div class="nav-buttons">
+            <a href="#" class="button-back" onclick="navigateQuestion('back')">Back</a>
+        </div>
+        <div class="nav-buttons">
+            <a href="#" class="button-next" onclick="navigateQuestion('next')">Next</a>
+        </div>
+    </div>
+
+</div>
+
+
 
     <div class="question-section">
         <div class="question-box">
             <div class="card">
                 <div class="card-body">
 
-                    <div class="question-content">
-                        <img id="bookmarkIcon" class="bookmark-icon"
-                            src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg=="
-                            alt="Bookmark" onclick="toggleBookmark()">
-                        <p>
-                            <strong>Question Number:</strong>
-                            <span id="displayQuestionNumber">-</span>
-                           <em class="mx-5">|</em>
-                            <strong>Category:</strong>
-                            <span id="displayCategory">-</span>
-                        </p>
-                        
-                       
-                        <p id="displayQuestion"></p>
+                    <img id="bookmarkIcon" class="bookmark-icon"
+                    src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg=="
+                    alt="Bookmark" onclick="toggleBookmark()">
 
+                    <div class="question-content">                      
+                        <p id="displayQuestion" class="displayQuestion-BG"></p>
                         <!-- Question Image Container -->
                         <div id="questionImageContainer" style="display:none; margin-top: 10px; text-align: center;">
                             <img id="questionImage" src="" alt="Question Image" class="img-fluid  que-img">
-                        </div>
-
-                       
+                        </div>                      
                         <div class="options">
                             <p id="optionA" onclick="selectAnswer('A')">-</p>
                             <p id="optionB" onclick="selectAnswer('B')">-</p>
@@ -480,20 +493,17 @@
                         <button class="submit-button mt-3" onclick="submitAnswer()">Submit</button>
                         <p id="feedbackMessage" class="feedback-message"></p>
                     </div>
-
                 </div>
             </div>
 
             <div class="card mt-5 mb-5">
                 <div class="card-body">
-
                     <div class="explanation-content">
                         <p class="d-flex justify-content-between">
                             <strong>Explanation:</strong>
-
                         </p>
-                        <p id="displayExplanation" style="display: none;">-</p>
 
+                        <p id="displayExplanation" style="display: none;">-</p>
                         <!-- Explanation Image Container -->
                         <div id="explanationImageContainer" style="display:none; margin-top: 10px; text-align: center;">
                             <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid exp-img">

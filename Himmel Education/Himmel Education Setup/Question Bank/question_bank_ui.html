@@ -62,7 +62,7 @@
         .question-content,
         .explanation-content {
             flex: 1;
-            margin-right: 20px;
+            margin-right: 35px;
             font-size: 17px;
             line-height: 1.6;
             word-wrap: break-word;
@@ -87,7 +87,7 @@
 
         .question-content .que-img {
             text-align: center;
-            width: 400px;
+            width: 700px;
             height: 400px;
         }
 
@@ -208,7 +208,7 @@
 
         .button-back {
             padding: 5px 23px;
-            color: #000;
+            color: red;
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 5px;
@@ -230,14 +230,12 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            margin-bottom: 40px;
-            margin-top: 20px;
         }
 
         .button-next {
             padding: 5px 23px;
             margin: 20px;
-            color: #000;
+            color: red;
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 5px;
@@ -333,7 +331,14 @@
         }
         .question-logo img{
             width: 300px;
-          height: 56px;
+          height: 47px;
+        }
+        .nav-ques{
+            padding: 0 5rem;
+        }
+        .displayQuestion-BG{
+            background-color: #c8f0f3;
+            padding: 20px 10px;
         }
     </style>
 </head>
@@ -345,6 +350,9 @@
                 height="36px">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
+        </div>
+        <div class=" container d-flex justify-content-end ">
+            <p style="color: darkgray; font-weight: 400;">A. Jamshed 2025</p>
         </div>
        
     </nav>
@@ -398,20 +406,31 @@
             </div>
 
 
-            <!-- Navigation Buttons: Back and Next -->
-            <div class=" d-flex ">
-                <div class="nav-buttons">
-                    <a href="#" class="button-back" onclick="navigateQuestion('back')">Back</a>
-                </div>
-
-
-                <div class="nav-buttons">
-                    <a href="#" class="button-next" onclick="navigateQuestion('next')">Next</a>
-                </div>
-            </div>
+          
         </div>
     </div>
 
+      <!-- Navigation Buttons: Back and Next -->
+      <div class=" d-flex justify-content-between nav-ques align-items-center">
+        <div>
+            <p>
+                <strong>Question Number:</strong>
+                 <span id="displayQuestionNumber">-</span>
+                 <em class="mx-5">|</em>
+                 <strong>Category:</strong>
+                 <span id="displayCategory">-</span>
+        </p>
+    </div>
+        <div class="d-flex ">        
+        <div class="nav-buttons">
+            <a href="#" class="button-back" onclick="navigateQuestion('back')">Back</a>
+        </div>
+        <div class="nav-buttons">
+            <a href="#" class="button-next" onclick="navigateQuestion('next')">Next</a>
+        </div>
+    </div>
+
+</div>
     <!-- Question Display Section -->
 
 
@@ -420,20 +439,14 @@
         <div class="question-box">
             <div class="card">
                 <div class="card-body">
-                    <div class="question-content">
-                        <img id="bookmarkIcon" class="bookmark-icon"
+                    <img id="bookmarkIcon" class="bookmark-icon"
                             src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg=="
                             alt="Bookmark" onclick="toggleBookmark()">
-                        <p>
-                            <strong>Question Number:</strong>
-                             <span id="displayQuestionNumber">-</span>
-                             <em class="mx-5">|</em>
-                             <strong>Category:</strong>
-                             <span id="displayCategory">-</span>
-                    </p>
+                    <div class="question-content">
+                        
                        
                        
-                        <p id="displayQuestion"></p>
+                        <p id="displayQuestion" class="displayQuestion-BG"></p>
                         <div id="questionImageContainer" style="display:none; margin-top: 10px; text-align: center;">
                             <img id="questionImage" src="" alt="Question Image" class="img-fluid que-img"
                                 style="cursor: pointer;" onclick="openModal('questionImage')">
@@ -447,7 +460,7 @@
                                 <p id="optionC">-</p>
                                 <p id="optionD">-</p>
                             </div>
-                            <p id="correctAnswer"><strong>Correct Answer:</strong> -</p>
+                            <p class="text-primary" id="correctAnswer"><strong>Correct Answer:</strong> -</p>
                             <p id="feedbackMessage" style="color: red;"></p>
                         </div>
                     </div>

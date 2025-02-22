@@ -215,9 +215,7 @@
         .stats-card p{
             font-weight: 600;
         }
-        .stats-card span{
-            color: #e63946;
-        }
+        
         .module img{
             width: 100px;
             height: 30px;
@@ -227,7 +225,11 @@
             text-align: center;
         }
         .exam-logo img{
-            width: 300px;
+            width: 250px;
+            height: 47px;
+        }
+        .stats-card span{
+            line-height: 2.5;
         }
     </style>
 </head>
@@ -242,6 +244,9 @@
             </svg>
         </div>
 
+        <div class=" container d-flex justify-content-end ">
+            <p style="color: darkgray; font-weight: 400;">A. Jamshed 2025</p>
+        </div>
         
     </nav>
     <div class=" col-lg-12 header_Himmel mt-2 mb-2">
@@ -285,11 +290,21 @@
                 <h5>Incorrect Answers</h5>
                 <h2 id="incorrectAnswers">0</h2>
             </div>
+
             <div class="stats-card">
-                <p><Span>Above 90</Span> is Excellent</p>
-                <p><span>75-90</span> is Good</p>
-                <p><span>Below 75</span> Needs Improvement</p>
+              
+                <span style="color: purple; font-weight: 600; ">Excellent 90% to 100% </span>
+                <span style="color: green; font-weight: 600;">Good 75% to 89% </span>
+                <span style="color: orange; font-weight: 600;">Satisfactory 60% to 74% </span>
+                <span style=" color:#e63946; font-weight: 600;">Deficent Below 60% </span>
+           
+            
             </div>
+        </div>
+
+
+        <div class="d-flex justify-content-end">
+            <button id="resetStatsButton" class="btn btn-danger" style="color: white;">Reset Stats</button>
         </div>
 
         <div class="chart-container">
@@ -314,9 +329,8 @@
             </div>
         </div>
         <div class="button-container" style="text-align: center; margin-top: 20px;">
-            <button id="beginTestButton" class="btn btn-danger" style="margin-right: 10px;">Begin Test</button>
-            <button id="resetStatsButton" class="btn btn-warning"
-                style="background-color: goldenrod; color: white;">Reset Stats</button>
+            <button id="beginTestButton" class="btn btn-danger" style="margin-right: 10px;">Start Test</button>
+            
         </div>
     </div>
 </body>
