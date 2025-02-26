@@ -261,21 +261,38 @@ def reset_stats():
 def create_exam():
     try:
         data = request.json
-        num_questions_per_category = data.get("num_questions", 0)
+        num_questions = data.get("num_questions", 0)
         categories = data.get("categories", [])
 
-        # Validate the number of questions and categories
-        if not categories or num_questions_per_category <= 0 or num_questions_per_category > 200:
+        # Validate basic inputs
+        if not categories or num_questions <= 0 or num_questions > 200:
             return jsonify({"success": False, "error": "Invalid exam parameters. Please select categories and a valid number of questions (1-200)."})
 
+        # Filter dataset to only include selected categories
+        available_questions = dataset[dataset["Category"].isin(categories)]
+        if available_questions.empty:
+            return jsonify({"success": False, "error": "No questions available for the selected categories."})
+
+        # Calculate questions per category (aim for even distribution)
+        total_available = len(available_questions)
+        num_questions = min(num_questions, total_available)  # Cap at available questions
+        questions_per_category = max(1, num_questions // len(categories)) if categories else 0
         quiz_questions = []
 
-        for category in categories:
-            available_questions = dataset.loc[dataset["Category"] == category]
-            if available_questions.empty:
-                continue  # Skip if no questions are available for the category
+        # Adjust to ensure total questions match num_questions
+        remaining_questions = num_questions
 
-            selected_questions = available_questions.sample(min(num_questions_per_category, len(available_questions))).reset_index()
+        for category in categories:
+            if remaining_questions <= 0:
+                break
+
+            category_questions = available_questions[available_questions["Category"] == category]
+            if category_questions.empty:
+                continue  # Skip if no questions are available for this category
+
+            # Determine how many questions to pick from this category
+            num_to_sample = min(questions_per_category, remaining_questions, len(category_questions))
+            selected_questions = category_questions.sample(n=num_to_sample).reset_index()
 
             for _, row in selected_questions.iterrows():
                 quiz_questions.append({
@@ -291,6 +308,32 @@ def create_exam():
                     "Question Image": row["Question Image"] if pd.notna(row["Question Image"]) else None,
                     "Explanation Image": row["Explanation Image"] if pd.notna(row["Explanation Image"]) else None
                 })
+
+            remaining_questions -= num_to_sample
+
+        # If there are still remaining questions and categories left, distribute them
+        if remaining_questions > 0:
+            remaining_pool = available_questions[~available_questions.index.isin([q["Question Number"] for q in quiz_questions])]
+            if not remaining_pool.empty:
+                extra_questions = remaining_pool.sample(n=min(remaining_questions, len(remaining_pool))).reset_index()
+                for _, row in extra_questions.iterrows():
+                    quiz_questions.append({
+                        "Question Number": row["Question Number"],
+                        "Question": row["Question"],
+                        "Category": row["Category"],
+                        "Option A": row["Option A"],
+                        "Option B": row["Option B"],
+                        "Option C": row["Option C"],
+                        "Option D": row["Option D"],
+                        "Correct Answer": row["Correct Answer"],
+                        "Explanation": row["Explanation"],
+                        "Question Image": row["Question Image"] if pd.notna(row["Question Image"]) else None,
+                        "Explanation Image": row["Explanation Image"] if pd.notna(row["Explanation Image"]) else None
+                    })
+
+        # Check if we fulfilled the request
+        if not quiz_questions:
+            return jsonify({"success": False, "error": "No questions could be selected for the exam."})
 
         return jsonify({"success": True, "questions": quiz_questions})
     except Exception as e:
