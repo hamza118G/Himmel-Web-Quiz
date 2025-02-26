@@ -379,6 +379,26 @@
     background-color: #c8f0f3;
     padding: 20px 10px;
 }
+.counter-section {
+    margin-top: 20px;
+    display: flex;
+    justify-content: stretch;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0 5rem; /* Match nav-ques padding */
+}
+.correct-counter {
+    color: #28a745;
+}
+.incorrect-counter {
+    color: #dc3545;
+}
+#incorrectCount{
+    color: #dc3545;
+}
+#correctCount{
+    color: #28a745;
+}
     </style>
 </head>
 
@@ -477,7 +497,10 @@
 
 </div>
 
-
+<div class="counter-section">
+    <div class="correct-counter">Correct: <span id="correctCount">0</span></div>
+    <div class="incorrect-counter">Incorrect: <span id="incorrectCount">0</span></div>
+</div>
 
     <div class="question-section">
         <div class="question-box">
@@ -536,6 +559,8 @@
     let currentIndex = 0;
     let selectedAnswer = null;
     var category = document.getElementById("categoryDropdown").value.trim().toLowerCase();
+    let correctCount = 0;
+    let incorrectCount = 0;
 
     const RED_SVG = "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZTYzOTQ2IiBoZWlnaHQ9IjI0IiB3aWR0aD0iMj" +
         "QiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cG" +
@@ -638,7 +663,7 @@ async function loadQuestions() {
             
             displayQuestion(questions[currentIndex]);
               difficultyLevel.textContent = `${response.data.data.Difficulty}`
-              categoryQuestion.textContent = `${response.data.total_questions}`
+            categoryQuestion.textContent = `${response.data.total_questions}`
         } else {
             alert(response.data.error || "Question not found.");
         }
@@ -815,64 +840,57 @@ async function loadQuestions() {
     }
 
     function submitAnswer() {
-        if (!selectedAnswer) {
-            alert("Please select an answer before submitting.");
-            return;
-        }
-
-        if (currentIndex < 0  || currentIndex >= questions.length) {
-            alert("Invalid question index. Please reload the questions.");
-            return;
-        }
-
-        if (!selectedAnswer) {
-            alert("Please select an answer.");
-            return;
-        }
-
-        const correctAnswer = questions[currentIndex]["Correct Answer"];
-        const feedback = document.getElementById("feedbackMessage");
-
-        // Reset previous feedback styles
-        resetUI();
-
-        // Provide feedback for the selected answer
-        if (selectedAnswer === correctAnswer) {
-            document.getElementById(`option${selectedAnswer}`).classList.add("correct");
-            document.getElementById("feedbackMessage").textContent = "Correct!";
-            document.getElementById("feedbackMessage").style.color = "green"
-        } else {
-            document.getElementById(`option${selectedAnswer}`).classList.add("wrong");
-            document.getElementById("feedbackMessage").textContent = "Wrong!";
-            document.getElementById("feedbackMessage").style.color = "red"
-
-            // Highlight the correct answer
-            document.getElementById(`option${correctAnswer}`).classList.add("correct");
-        }   
-        
-
-        // Show explanation
-        const explanationElement = document.getElementById("displayExplanation");
-        explanationElement.style.display = "block";
-        const explanationImage = document.getElementById("explanationImage");
-        const explanationImageContainer = document.getElementById("explanationImageContainer");
-
-        if (questions[currentIndex]["Explanation"]) {
-            explanationElement.textContent = questions[currentIndex]["Explanation"];
-            explanationElement.style.display = "block";
-        } else {
-            explanationElement.textContent = "-";
-            explanationElement.style.display = "none";
-        }
-
-        if (questions[currentIndex]["Explanation Image"]) {
-            explanationImage.src = questions[currentIndex]["Explanation Image"];
-            explanationImageContainer.style.display = "block";
-        } else {
-            explanationImage.src = "";
-            explanationImageContainer.style.display = "none";
-        }
+    if (!selectedAnswer) {
+        alert("Please select an answer before submitting.");
+        return;
     }
+
+    if (currentIndex < 0 || currentIndex >= questions.length) {
+        alert("Invalid question index. Please reload the questions.");
+        return;
+    }
+
+    const correctAnswer = questions[currentIndex]["Correct Answer"];
+    const feedback = document.getElementById("feedbackMessage");
+
+    resetUI();
+
+    if (selectedAnswer === correctAnswer) {
+        document.getElementById(`option${selectedAnswer}`).classList.add("correct");
+        feedback.textContent = "Correct!";
+        feedback.style.color = "green";
+        correctCount++;
+        document.getElementById("correctCount").textContent = correctCount;
+    } else {
+        document.getElementById(`option${selectedAnswer}`).classList.add("wrong");
+        feedback.textContent = "Wrong!";
+        feedback.style.color = "red";
+        document.getElementById(`option${correctAnswer}`).classList.add("correct");
+        incorrectCount++;
+        document.getElementById("incorrectCount").textContent = incorrectCount;
+    }
+
+    const explanationElement = document.getElementById("displayExplanation");
+    explanationElement.style.display = "block";
+    const explanationImage = document.getElementById("explanationImage");
+    const explanationImageContainer = document.getElementById("explanationImageContainer");
+
+    if (questions[currentIndex]["Explanation"]) {
+        explanationElement.textContent = questions[currentIndex]["Explanation"];
+        explanationElement.style.display = "block";
+    } else {
+        explanationElement.textContent = "-";
+        explanationElement.style.display = "none";
+    }
+
+    if (questions[currentIndex]["Explanation Image"]) {
+        explanationImage.src = questions[currentIndex]["Explanation Image"];
+        explanationImageContainer.style.display = "block";
+    } else {
+        explanationImage.src = "";
+        explanationImageContainer.style.display = "none";
+    }
+}
 
     async function toggleBookmark() {
         const questionNumber = parseInt(document.getElementById("displayQuestionNumber").textContent.trim());
