@@ -413,12 +413,21 @@
       <!-- Navigation Buttons: Back and Next -->
       <div class=" d-flex justify-content-between nav-ques align-items-center">
         <div>
-            <p>
+            <p class="pb-2">
                 <strong>Question Number:</strong>
                  <span id="displayQuestionNumber">-</span>
                  <em class="mx-5">|</em>
                  <strong>Category:</strong>
                  <span id="displayCategory">-</span>
+                 
+        </p>
+        <p>
+           
+            <strong>Category Total Question</strong>
+            <span id="displayTotalQuestionCategory">-</span>
+            <em class="mx-5">|</em>
+            <strong>Difficulty</strong>
+            <span id="displayDifficulty">-</span>
         </p>
     </div>
         <div class="d-flex ">        
@@ -644,12 +653,15 @@
             document.getElementById("correctAnswer").textContent = "Correct Answer: -";
             document.getElementById("feedbackMessage").textContent = "";
             document.getElementById("displayExplanation").style.display = "none";
+            
         }
 
         // Fetch a question by its number
         async function fetchQuestionByNumber() {
             const questionNumber = document.getElementById("questionNumber").value.trim();
             const errorMessage = document.getElementById("errorMessage");
+           
+            const difficultyLevel = document.getElementById("displayDifficulty")
             errorMessage.textContent = ""; // Clear previous errors
 
             if (!questionNumber) {
@@ -662,6 +674,8 @@
                     `${API_BASE_URL}/get_question?question_number=${encodeURIComponent(questionNumber)}`);
                 if (response.data.success) {
                     displayQuestion(response.data.data);
+                  
+                    difficultyLevel.textContent = `${response.data.data.Difficulty}`
                 } else {
                     errorMessage.textContent = response.data.error || "Error fetching question.";
                 }
@@ -777,26 +791,32 @@
 
         // Fetch the first question for the selected category
         async function fetchFirstQuestionByCategory() {
-            const selectedCategory = document.getElementById("categoryDropdown").value;
+    const categoryDropdown = document.getElementById("categoryDropdown");
+    const selectedCategory = categoryDropdown.value;
+    const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
+    const difficultyLevel = document.getElementById("displayDifficulty")
 
-            if (!selectedCategory) {
-                console.error("No category selected.");
-                return;
-            }
+    if (!selectedCategory || selectedCategory === "none") {
+        console.error("No valid category selected.");
+        return;
+    }
 
-            try {
-                const response = await axios.get(
-                    `${API_BASE_URL}/get_first_question_by_category?category=${encodeURIComponent(selectedCategory)}`
-                );
-                if (response.data.success) {
-                    displayQuestion(response.data.data);
-                } else {
-                    console.error("Failed to fetch question for category.");
-                }
-            } catch (error) {
-                console.error("Error fetching first question by category:", error);
-            }
+    try {
+        const response = await axios.get(
+            `${API_BASE_URL}/get_first_question_by_category?category=${encodeURIComponent(selectedCategory)}`
+        );
+        if (response.data.success) {
+            displayQuestion(response.data.data);
+              categoryQuestion.textContent = `${response.data.total_questions}`
+              difficultyLevel.textContent = `${response.data.data.Difficulty}`
+        } else {
+            console.error("Failed to fetch question for category.");
         }
+    } catch (error) {
+        console.error("Error fetching first question by category:", error);
+    }
+}
+
 
         // Fetch all categories
         async function fetchCategories() {
@@ -823,26 +843,33 @@
 
         // Navigate to the next or previous question
         async function navigateQuestion(direction) {
-            const currentQuestion = document.getElementById("displayQuestionNumber").textContent.trim();
+    const currentQuestion = document.getElementById("displayQuestionNumber").textContent.trim();
+    const currentCategory = document.getElementById("displayCategory").textContent.trim(); // Get the category
+    const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
+    const difficultyLevel = document.getElementById("displayDifficulty")
 
-            if (!currentQuestion) {
-                console.error("Current question number is missing.");
-                return;
-            }
 
-            try {
-                const response = await axios.get(
-                    `${API_BASE_URL}/navigate_question?question_number=${currentQuestion}&direction=${direction}`
-                );
-                if (response.data.success) {
-                    displayQuestion(response.data.data);
-                } else {
-                    console.error(response.data.error || "Navigation error.");
-                }
-            } catch (error) {
-                console.error("Error navigating question:", error);
-            }
+    if (!currentQuestion || !currentCategory) {
+        console.error("Current question number or category is missing.");
+        return;
+    }
+
+    try {
+        const response = await axios.get(
+            `${API_BASE_URL}/navigate_question?question_number=${currentQuestion}&category=${encodeURIComponent(currentCategory)}&direction=${direction}`
+        );
+        if (response.data.success) {
+            displayQuestion(response.data.data);
+            categoryQuestion.textContent = `${response.data.total_questions}`
+            difficultyLevel.textContent = `${response.data.data.Difficulty}`
+        } else {
+            console.error(response.data.error || "Navigation error.");
         }
+    } catch (error) {
+        console.error("Error navigating question:", error);
+    }
+}
+
 
 
 
@@ -870,6 +897,8 @@
         async function loadQuestionFromURL() {
             const questionNumber = getQueryParam("question_number");
             const category = getQueryParam("category");
+            const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
+            const difficultyLevel = document.getElementById("displayDifficulty")
 
             if (questionNumber && category) {
                 try {
@@ -879,8 +908,11 @@
                     if (response.data.success) {
                         // Update the questions array with the fetched question
                         questions = [response.data.data]; // Wrap the question in an array
-                        currentIndex = 0; // Reset index to 0
-                        displayQuestion(questions[currentIndex]); // Display the question
+                         // Reset index to 0
+                         displayQuestion(response.data.data);
+                           categoryQuestion.textContent = `${response.data.total_questions}`
+                           difficultyLevel.textContent = `${response.data.data.Difficulty}`
+                         // Display the question
                     } else {
                         console.error("Failed to fetch question:", response.data.error);
                     }
@@ -892,22 +924,12 @@
 
         // Call the function when the page loads
         document.addEventListener("DOMContentLoaded", loadQuestionFromURL);
+
+
+        
     </script>
 
-    <div id="imageModal" class="modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Image Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <img id="modalImage" src="" alt="Modal Image" class="img-fluid">
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
 
 
 </body>

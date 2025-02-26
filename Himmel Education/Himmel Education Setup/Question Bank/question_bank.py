@@ -7,6 +7,7 @@ from io import BytesIO
 import base64
 import os
 from flask import send_from_directory
+import random
 
 
 app = Flask(__name__)
@@ -25,7 +26,7 @@ try:
     required_columns = [
         "Question Number", "Question", "Category", "Option A",
         "Option B", "Option C", "Option D", "Correct Answer",
-        "Explanation", "Question Image", "Explanation Image"
+        "Explanation", "Question Image", "Explanation Image","Difficulty"
     ]
     existing_columns = [col for col in required_columns if col in dataset.columns]
 
@@ -77,19 +78,32 @@ def get_question_data(question_number):
 # Endpoint to fetch a specific question
 @app.route('/get_question', methods=['GET'])
 def get_question():
+    category = request.args.get('category', type=str)
     question_number = request.args.get('question_number', type=str)
-    if not question_number or not question_number.isdigit():
-        return jsonify({"success": False, "error": "Invalid or missing question number."})
 
     try:
-        question_data = get_question_data(question_number)
-        if question_data:
-            return jsonify({"success": True, "data": question_data})
-        else:
+        # If a specific question number is provided, return that question
+        if question_number and question_number.isdigit():
+            question_data = get_question_data(question_number)
+            if question_data:
+                return jsonify({"success": True, "data": question_data})
             return jsonify({"success": False, "error": f"Question number {question_number} not found."})
+
+        # If no question number is provided, fetch a random question from the given category
+        if category:
+            filtered_questions = dataset[dataset["Category"].str.strip().str.lower() == category.strip().lower()]
+            if not filtered_questions.empty:
+                random_question_number = random.choice(filtered_questions.index.tolist())
+                question_data = get_question_data(random_question_number)
+                return jsonify({"success": True, "data": question_data})
+            return jsonify({"success": False, "error": f"No questions found for category '{category}'."})
+
+        return jsonify({"success": False, "error": "Category is required when requesting a random question."})
+
     except Exception as e:
         print(f"Error fetching question: {e}")
         return jsonify({"success": False, "error": "Could not fetch question."})
+
 
 # Endpoint to get all unique categories
 @app.route('/get_categories', methods=['GET'])
@@ -110,11 +124,23 @@ def get_first_question_by_category():
         return jsonify({"success": False, "error": "Invalid or missing category."})
 
     try:
+        # Filter dataset by category
         filtered = dataset[dataset["Category"].str.strip().str.lower() == category.strip().lower()]
+        
         if not filtered.empty:
-            first_question_number = filtered.index[0]
-            question_data = get_question_data(first_question_number)
-            return jsonify({"success": True, "data": question_data})
+            # Get the total number of questions in the category
+            total_questions = len(filtered)
+            
+            # Pick a random question from the filtered dataset
+            random_question_number = random.choice(filtered.index.tolist())
+            question_data = get_question_data(random_question_number)
+            
+            # Include total_questions in the response
+            return jsonify({
+                "success": True,
+                "data": question_data,
+                "total_questions": total_questions
+            })
         else:
             return jsonify({"success": False, "error": f"No questions found for category '{category}'."})
     except Exception as e:
@@ -123,34 +149,27 @@ def get_first_question_by_category():
 
 
 # Endpoint to navigate to the next or previous question
+
+
 @app.route('/navigate_question', methods=['GET'])
 def navigate_question():
-    question_number = request.args.get('question_number', type=str)
-    direction = request.args.get('direction', type=str)
+    category = request.args.get('category', type=str)
 
-    if not question_number or not question_number.isdigit() or direction not in ['next', 'back']:
-        return jsonify({"success": False, "error": "Invalid navigation parameters."})
+    if not category:
+        return jsonify({"success": False, "error": "Category is required for navigation."})
 
     try:
-        question_number = int(question_number)
-        index_list = dataset.index.tolist()
-        if question_number not in index_list:
-            return jsonify({"success": False, "error": f"Question Number {question_number} not found."})
-
-        current_index = index_list.index(question_number)
-        if direction == 'next' and current_index + 1 < len(index_list):
-            next_question_number = index_list[current_index + 1]
-            next_question = get_question_data(next_question_number)
-            return jsonify({"success": True, "data": next_question})
-        elif direction == 'back' and current_index - 1 >= 0:
-            prev_question_number = index_list[current_index - 1]
-            prev_question = get_question_data(prev_question_number)
-            return jsonify({"success": True, "data": prev_question})
-        else:
-            return jsonify({"success": False, "error": f"No {'next' if direction == 'next' else 'previous'} question available."})
+        filtered_questions = dataset[dataset["Category"].str.strip().str.lower() == category.strip().lower()]
+        if not filtered_questions.empty:
+            random_question_number = random.choice(filtered_questions.index.tolist())
+            random_question = get_question_data(random_question_number)
+            return jsonify({"success": True, "data": random_question})
+        return jsonify({"success": False, "error": f"No questions found for category '{category}'."})
     except Exception as e:
-        print(f"Error navigating questions: {e}")
+        print(f"Error fetching random question: {e}")
         return jsonify({"success": False, "error": "An internal server error occurred."})
+
+
 
 # Endpoint to toggle a bookmark
 @app.route('/toggle_bookmark', methods=['POST'])
