@@ -627,6 +627,7 @@ async function loadQuestions() {
             const categoryDropdown = document.getElementById("categoryDropdown");
             categoryDropdown.value = questionCategory;
             const difficultyLevel = document.getElementById("displayDifficulty")
+            const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
             // If the category isn't in the dropdown, add it
             if (!categoryDropdown.querySelector(`option[value="${questionCategory}"]`)) {
                 const newOption = document.createElement("option");
@@ -637,6 +638,7 @@ async function loadQuestions() {
             
             displayQuestion(questions[currentIndex]);
               difficultyLevel.textContent = `${response.data.data.Difficulty}`
+              categoryQuestion.textContent = `${response.data.total_questions}`
         } else {
             alert(response.data.error || "Question not found.");
         }

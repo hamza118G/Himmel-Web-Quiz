@@ -161,16 +161,41 @@ def get_first_question_by_category():
 # Endpoint to fetch a specific question by number
 @app.route('/get_question', methods=['GET'])
 def get_question():
+    category = request.args.get('category', type=str)
     question_number = request.args.get('question_number', type=str)
-    if not question_number or not question_number.isdigit():
-        return jsonify({"success": False, "error": "Invalid or missing question number."})
 
     try:
-        question_data = get_question_data(question_number)
-        if question_data:
-            return jsonify({"success": True, "data": question_data})
-        else:
+        # If a specific question number is provided, return that question
+        if question_number and question_number.isdigit():
+            question_data = get_question_data(question_number)
+            if question_data:
+                # Determine the category (either from query or question data)
+                effective_category = category if category else question_data["Category"]
+                filtered_questions = dataset[dataset["Category"].str.strip().str.lower() == effective_category.strip().lower()]
+                total_questions = len(filtered_questions) if not filtered_questions.empty else 0
+                return jsonify({
+                    "success": True,
+                    "data": question_data,
+                    "total_questions": total_questions
+                })
             return jsonify({"success": False, "error": f"Question number {question_number} not found."})
+
+        # If no question number is provided, fetch a random question from the given category
+        if category:
+            filtered_questions = dataset[dataset["Category"].str.strip().str.lower() == category.strip().lower()]
+            if not filtered_questions.empty:
+                random_question_number = random.choice(filtered_questions.index.tolist())
+                question_data = get_question_data(random_question_number)
+                total_questions = len(filtered_questions)
+                return jsonify({
+                    "success": True,
+                    "data": question_data,
+                    "total_questions": total_questions
+                })
+            return jsonify({"success": False, "error": f"No questions found for category '{category}'."})
+
+        return jsonify({"success": False, "error": "Category is required when requesting a random question."})
+
     except Exception as e:
         print(f"Error fetching question: {e}")
         return jsonify({"success": False, "error": "Could not fetch question."})
@@ -188,12 +213,16 @@ def navigate_question():
         if not filtered_questions.empty:
             random_question_number = random.choice(filtered_questions.index.tolist())
             random_question = get_question_data(random_question_number)
-            return jsonify({"success": True, "data": random_question})
+            total_questions = len(filtered_questions)
+            return jsonify({
+                "success": True,
+                "data": random_question,
+                "total_questions": total_questions
+            })
         return jsonify({"success": False, "error": f"No questions found for category '{category}'."})
     except Exception as e:
         print(f"Error fetching random question: {e}")
         return jsonify({"success": False, "error": "An internal server error occurred."})
-
  
 # Endpoint to toggle a bookmark
 @app.route('/toggle_bookmark', methods=['POST'])

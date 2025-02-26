@@ -662,6 +662,8 @@
             const errorMessage = document.getElementById("errorMessage");
            
             const difficultyLevel = document.getElementById("displayDifficulty")
+            const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
+
             errorMessage.textContent = ""; // Clear previous errors
 
             if (!questionNumber) {
@@ -674,8 +676,9 @@
                     `${API_BASE_URL}/get_question?question_number=${encodeURIComponent(questionNumber)}`);
                 if (response.data.success) {
                     displayQuestion(response.data.data);
-                  
+                    categoryQuestion.textContent = `${response.data.total_questions}`
                     difficultyLevel.textContent = `${response.data.data.Difficulty}`
+
                 } else {
                     errorMessage.textContent = response.data.error || "Error fetching question.";
                 }
