@@ -253,7 +253,7 @@
         }
 
         span {
-            color: black;
+            color: rgba(13, 110, 253);
             font-weight: 600;
         }
 
@@ -318,8 +318,18 @@
             font-size: 40px;
         }
 
+        .dynamic-category{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-     
+        }
+     @media only screen and (max-width:975px) {
+    .dynamic-category{
+        display: block;
+    }
+}
+  
 
         #displayCategory {
             text-transform: uppercase;
@@ -411,22 +421,22 @@
     </div>
 
       <!-- Navigation Buttons: Back and Next -->
-      <div class=" d-flex justify-content-between nav-ques align-items-center">
+      <div class="dynamic-category nav-ques align-items-center">
         <div>
             <p class="pb-2">
                 <strong>Question Number:</strong>
                  <span id="displayQuestionNumber">-</span>
-                 <em class="mx-5">|</em>
+                 <em class="px-3">|</em>
                  <strong>Category:</strong>
                  <span id="displayCategory">-</span>
                  
         </p>
         <p>
            
-            <strong>Category Total Question</strong>
+            <strong>Category Total Question:</strong>
             <span id="displayTotalQuestionCategory">-</span>
-            <em class="mx-5">|</em>
-            <strong>Difficulty</strong>
+            <em class="px-3">|</em>
+            <strong>Difficulty:</strong>
             <span id="displayDifficulty">-</span>
         </p>
     </div>
@@ -460,9 +470,7 @@
                             <img id="questionImage" src="" alt="Question Image" class="img-fluid que-img"
                                 style="cursor: pointer;" onclick="openModal('questionImage')">
                         </div>
-
-                        <div>
-                           
+                        <div>                          
                             <div class="options">
                                 <p id="optionA">-</p>
                                 <p id="optionB">-</p>
@@ -478,10 +486,11 @@
             <div class="card mt-5 mb-5">
                 <div class="card-body">
                     <div class="explanation-content">
+
                         <p class="d-flex justify-content-between">
                             <strong>Explanation:</strong>
-
                         </p>
+
                         <p id="displayExplanation">-</p>
                         <div id="explanationImageContainer" style="display:none; margin-top: 10px; text-align: center;">
                             <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid exp-img"
