@@ -64,7 +64,7 @@
             /* Reduced size by 30% (from 2rem to 1.4rem) */
             line-height: 1.4;
             /* Maintain line spacing for readability */
-            word-wrap: break-word;
+          
             /* Ensure long text wraps properly */
         }
 
@@ -351,7 +351,9 @@
         .dynamic-category{
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            padding-bottom: 0;
+            margin-bottom: 0;
         }
 
         .precision-learning p {
@@ -385,15 +387,15 @@
     padding: 20px 10px;
 }
 .counter-section {
-    margin-top: 20px;
     display: flex;
-    justify-content: stretch;
+    justify-content: center;
     font-size: 1.2rem;
     font-weight: bold;
     padding: 0 5rem; /* Match nav-ques padding */
 }
 .correct-counter {
     color: #28a745;
+
 }
 .incorrect-counter {
     color: #dc3545;
@@ -457,7 +459,7 @@
             <!-- Search Input -->
             <div class="col-lg-3 mb-3">
                 <label for="questionNumber" class="form-label">Search:</label>
-                <input type="text" id="questionNumber" autocomplete="off" class="form-control"
+                <input type="number" id="questionNumber" autocomplete="off" class="form-control"
                     placeholder="Search Specific Question">
             </div>
 
@@ -474,26 +476,24 @@
     </div>
 
 
-    <div class=" dynamic-category  nav-ques align-items-center">
-        <div>
-            <p class="pb-2">
-                <strong>Question Number:</strong>
+    <div class=" dynamic-category  nav-ques ">
+        
+            <p class="d-flex justify-content-center pt-3 m-0">
+                <strong class="px-2">Question Number:</strong>
                  <span id="displayQuestionNumber">-</span>
                  <em class="px-3 ">|</em>
-                 <strong>Category:</strong>
+                 <strong class="px-2">Category:</strong>
                  <span id="displayCategory">-</span>
-              
-                 
+                 <em class="px-3 ">|</em>
+                 <strong class="px-2">Category Questions:</strong>
+                 <span id="displayTotalQuestionCategory">-</span>
+                 <em class="px-3">|</em>
+                 <strong class="px-2">Difficulty:</strong>
+                 <span id="displayDifficulty">-</span>                            
         </p>
-        <p>
-            <strong>Category Total Question:</strong>
-            <span id="displayTotalQuestionCategory">-</span>
-            <em class="px-3">|</em>
-            <strong>Difficulty:</strong>
-            <span id="displayDifficulty">-</span>
-        </p>
-    </div>
-        <div class="d-flex ">        
+        <hr style="background-color: #c82333; width: 100%;">
+   
+        <div class="d-flex  justify-content-start">        
         <div class="nav-buttons">
             <a href="#" class="button-back" onclick="navigateQuestion('back')">Back</a>
         </div>
@@ -505,8 +505,8 @@
 </div>
 
 <div class="counter-section">
-    <div class="correct-counter">Correct: <span id="correctCount">0</span></div>
-    <div class="incorrect-counter">Incorrect: <span id="incorrectCount">0</span></div>
+    <div class="correct-counter px-3">Correct: <span id="correctCount">0</span></div>
+    <div class="incorrect-counter px-3">Incorrect: <span id="incorrectCount">0</span></div>
 </div>
 
     <div class="question-section">
@@ -592,7 +592,7 @@
         try {
             const response = await axios.get(`${API_BASE_URL}/get_categories`);
             const dropdown = document.getElementById("categoryDropdown");
-            dropdown.innerHTML = '<option  selected>None</option>';
+            dropdown.innerHTML = '<option selected>None</option>';
             response.data.categories.forEach(category => {
                 const option = document.createElement("option");
                 option.value = category.trim().toLowerCase();
@@ -619,7 +619,7 @@
             currentIndex = 0; // Reset to the first question
             displayQuestion(questions[currentIndex]); // Display the question
             categoryQuestion.textContent = `${response.data.total_questions}`;
-              difficultyLevel.textContent = `${response.data.data.Difficulty}`
+            difficultyLevel.textContent = `${response.data.data.Difficulty}`
         } else {
             console.error("Failed to fetch question for category.");
         }
@@ -655,7 +655,7 @@ async function loadQuestions() {
             currentIndex = 0; // Reset index
             
             // Update the category dropdown to match the question's category
-            const questionCategory = response.data.data.Category.trim().toLowerCase();
+            const questionCategory = response.data.data.Category.toLowerCase();
             const categoryDropdown = document.getElementById("categoryDropdown");
             categoryDropdown.value = questionCategory;
             const difficultyLevel = document.getElementById("displayDifficulty")
@@ -900,7 +900,7 @@ async function loadQuestions() {
 }
 
     async function toggleBookmark() {
-        const questionNumber = parseInt(document.getElementById("displayQuestionNumber").textContent.trim());
+        const questionNumber = parseInt(document.getElementById("displayQuestionNumber").textContent);
         const category = document.getElementById("displayCategory").textContent.trim();
 
         if (!questionNumber) {

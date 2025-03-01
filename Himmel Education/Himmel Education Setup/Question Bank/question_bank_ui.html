@@ -322,6 +322,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-direction: column;
 
         }
      @media only screen and (max-width:975px) {
@@ -422,25 +423,24 @@
 
       <!-- Navigation Buttons: Back and Next -->
       <div class="dynamic-category nav-ques align-items-center">
-        <div>
-            <p class="pb-2">
+            <p class="pt-3 m-0">
                 <strong>Question Number:</strong>
                  <span id="displayQuestionNumber">-</span>
                  <em class="px-3">|</em>
                  <strong>Category:</strong>
                  <span id="displayCategory">-</span>
+                 <em class="px-3">|</em>
+                 <strong>Category Questions:</strong>
+                 <span id="displayTotalQuestionCategory">-</span>
+                 <em class="px-3">|</em>
+                 <strong>Difficulty:</strong>
+                 <span id="displayDifficulty">-</span>
                  
         </p>
-        <p>
-           
-            <strong>Category Total Question:</strong>
-            <span id="displayTotalQuestionCategory">-</span>
-            <em class="px-3">|</em>
-            <strong>Difficulty:</strong>
-            <span id="displayDifficulty">-</span>
-        </p>
-    </div>
-        <div class="d-flex ">        
+
+    <hr style="width: 100%;">
+
+        <div class="d-flex m-0 p-0 ">        
         <div class="nav-buttons">
             <a href="#" class="button-back" onclick="navigateQuestion('back')">Back</a>
         </div>
@@ -506,6 +506,7 @@
     <p class="error-message" id="errorMessage"></p>
     </div>
 
+        
     <script>
         const API_BASE_URL = "http://127.0.0.1:5006";
 
@@ -636,8 +637,10 @@
                 // Set the icon color based on whether the question is bookmarked
                 if (bookmarkedQuestions.has(questionNumber)) {
                     bookmarkIcon.src = RED_SVG;
-                } else {
+                } else if(bookmarkedQuestions.get(questionNumber)) {
                     bookmarkIcon.src = GRAY_SVG;
+                } else{
+                    alert("Bookmark is not reserved or Saved.")
                 }
             });
         }
