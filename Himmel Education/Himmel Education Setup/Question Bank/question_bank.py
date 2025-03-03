@@ -127,9 +127,8 @@ def get_categories():
     except Exception as e:
         print(f"Error fetching categories: {e}")
         return jsonify({"success": False, "error": "Could not fetch categories."})
-
+     
 # Endpoint to fetch the first question of a category
-
 @app.route('/get_first_question_by_category', methods=['GET'])
 def get_first_question_by_category():
     category = request.args.get('category', type=str)
@@ -170,7 +169,6 @@ def navigate_question():
 
     if not category:
         return jsonify({"success": False, "error": "Category is required for navigation."})
-
     try:
         filtered_questions = dataset[dataset["Category"].str.strip().str.lower() == category.strip().lower()]
         if not filtered_questions.empty:

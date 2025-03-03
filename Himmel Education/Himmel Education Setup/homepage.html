@@ -12,10 +12,14 @@
         /* General body styling */
         body {
             font-family: "Poppins", serif;
-            font-weight: 100;
+            font-weight: 400;
+            /* Bolder font for vibrancy */
             font-style: normal;
             margin: 20px;
-           
+            background: linear-gradient(100deg, #00c4cc, #ff6b6b);
+            /* background-image: linear-gradient(to right top, #5ffbf1, #46eefa, #41dfff, #52cffe, #69bff8, #73b1f5,
+            #84a2ee, #9691e2, #aa7dd6, #be64c1, #cf47a4, #d91d80); */
+
         }
 
         /* Logo and Title */
@@ -24,151 +28,175 @@
             margin-bottom: 10px;
             align-items: center;
             justify-content: space-between;
-
-
-        }
-
-        .header h1 {
-
-            font-weight: bold;
-            color: #e63946;
-            font-size: 40px;
-        }
-
-        .header h2 {
-            font-size: 1.2rem;
-            font-weight: normal;
-            color: #333;
         }
 
         /* Container for the buttons */
         .container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            /* Two buttons per row */
             gap: 30px;
             justify-content: center;
-            /* Align buttons in center */
         }
 
-        /* Button styles */
-        .button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 260px;
-            /* Square width */
-            height: 260px;
-            /* Square height */
-            text-decoration: none;
-            color: white;
-            background-color: #1e5f75;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.2rem;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease;
-
-            position: relative;
-        }
-
-        .button:hover {
-            transform: scale(1.05);
-        }
-
-        /* Images inside buttons */
-        .button img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Ensures full visibility of the image */
-            z-index: 1;
-        }
-
-        /* Text overlay */
-        .button span {
-            position: relative;
-            z-index: 2;
-            font-size: 1.8rem;
-            /* Larger font for button text */
-            font-weight: bold;
-            color: white;
-            text-shadow: 1px 1px 4px black;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.5);
-            /* Semi-transparent background */
-            border-radius: 5px;
-        }
-
-       
-        .precision-learning p {
-            font-size: 1.75rem;
-            font-family: math;
-            font-style: italic;
-            word-wrap: break-word;
-        }
         .header-logo {
             display: flex;
             justify-content: center;
             text-align: center;
         }
 
-     
-        .top-header{
-           
+        .top-header {
             display: flex;
             justify-content: space-between;
         }
+
         .home-button {
             cursor: pointer;
             display: inline-block;
-            padding: 5px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
+        .home-button:hover {
+            transform: scale(1.1);
+            /* Slight zoom on hover */
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+        }
+
         .header img {
             float: right;
             height: 8rem;
             margin-bottom: 5px;
         }
+
         @media (max-width: 1200px) {
-    .container {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
+            .container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
 
-/* 2 columns for smaller screens (max-width: 900px) */
-@media (max-width: 970px) {
-    .container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+        @media (max-width: 970px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
 
-/* 1 column for mobile screens (max-width: 600px) */
-@media (max-width: 640px) {
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
+        @media (max-width: 640px) {
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
 
-.Home-logo img{
-    width: 250px;
-    height: 47px;
-}
+        .Home-logo img {
+            width: 250px;
+            height: 47px;
+        }
+
+        @media (max-width: 720px) {
+            .header {
+                display: block;
+                text-align: center;
+                align-items: center;
+            }
+        }
+
+        .home-container {
+            position: relative;
+            border-radius: 15px;
+            /* Rounded corners */
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            /* Stronger shadow */
+            transition: transform 0.3s;
+        }
+
+        .home-container:hover {
+            transform: translateY(-10px);
+            /* Lift effect on hover */
+        }
+
+        .image {
+            display: block;
+            width: 300px;
+            height: 500px;
+            object-fit: cover;
+            /* Ensure image fits nicely */
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #00c4cc, #ff6b6b);
+            /* Colorful gradient */
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: 1.5s ease;
+            /* Faster, smoother transition */
+            opacity: 0.9;
+        }
+
+        .home-container:hover .overlay {
+            bottom: 0;
+            height: 100%;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .text {
+            color: #fff;
+            /* White text for contrast */
+            font-size: 14px;
+            /* Slightly larger text */
+            font-weight: 500;
+            /* Bolder text */
+            position: absolute;
+            overflow: hidden;
+            top: 10%;
+            left: 10%;
+            transform: translate(-5%, -5%);
+            padding: 10px;
+        }
+
+        .mode-Heading {
+            text-decoration: none;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .mode-Heading img {
+            object-fit: cover;
+            object-position: center;
 
 
-@media (max-width: 720px) {
-    .header {
-        display: block;
-        text-align: center;
-        align-items: center;
-    }
-}
+        }
+
+        a .mode-Heading h6 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(39deg, #272eff, #050629);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-shadow: 1px 1px 3px rgba(158, 22, 22, 0.3);
+            display: inline-table;
+        }
+
+        a:hover .mode-Heading h6 {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(144, 49, 90, 0.5);
+            background: linear-gradient(39deg, #05073a, #050629);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
     </style>
 </head>
 
@@ -183,7 +211,7 @@
         <div class=" container d-flex justify-content-end ">
             <p style="color: darkgray; font-weight: 400;">A. Jamshed 2025</p>
         </div>
-       
+
     </div>
     <!-- Header Section -->
     <nav>
@@ -203,33 +231,85 @@
     <!-- Buttons Container -->
     <div class="container">
         <!-- Question Bank -->
-        <a href="Question Bank/question_bank_ui.html" class="button">
-            <img src="question art.jpg" alt="Question Bank">
-            <span>Editor Mode</span>
+        <a href="Question Bank/question_bank_ui.html">
+            <div class="mode-Heading">
+                <h6>Question Bank</h6>
+            </div>
+            <div class="home-container">
+                <img src="./question-marks-background_78370-2896.avif" alt="Avatar" class="image">
+
+                <div class="overlay">
+                    <div class="text">In Question Mode, you can systematically go through all questions one by one. Each
+                        question comes with four answer options, and as you select and submit an answer, you'll receive
+                        instant feedback on whether your choice was correct or incorrect. After submission, a detailed
+                        explanation of the correct answer is provided. This mode allows for structured learning, helping
+                        you review concepts step by step while tracking your progress. This mode helps in systematic
+                        learningand ensures a step-by-step approach to mastering medical concepts.</div>
+                </div>
+            </div>
         </a>
 
         <!-- Practice Mode -->
-        <a href="Practice Mode/practice_mode.html" class="button">
-            <img src="practice art.jpg" alt="Practice Mode">
-            <span>Practice Mode</span>
+        <a href="Practice Mode/practice_mode.html">
+            <div class="mode-Heading">
+                <h6>Practice Mode</h6>
+            </div>
+            <div class="home-container">
+                <img src="./PracticeMode.webp" alt="Avatar" class="image">
+                <div class="overlay">
+                    <div class="text">In Practice Mode, you can actively test your knowledge by selecting a specific
+                        category. This Mode will present a series of random questions from that category, each with four
+                        answer options. As you select and submit an answer, you'll receive instant feedback on whether
+                        your choice was correct or incorrect. After each submission, a detailed explanation of the
+                        correct answer is provided. Throughout the session, the app tracks your progress, displaying the
+                        number of correct and incorrect answers, helping you analyze your performance and improve your
+                        understanding.</div>
+                </div>
+            </div>
         </a>
 
         <!-- Exam Mode -->
-        <a href="Himmel/himmel.html" class="button">
-            <img src="exam art.jpg" alt="Exam Mode">
-            <span>Exam Mode</span>
+        <a href="Himmel/himmel.html">
+            <div class="mode-Heading">
+                <h6>Exam Mode</h6>
+            </div>
+            <div class="home-container">
+                <img src="./Exam Mode.webp" alt="Avatar" class="image">
+                <div class="overlay">
+                    <div class="text">In Exam Mode, you can take a full-length test by selecting up to 200 questions
+                        from all categories. As you attempt and submit answers, you'll receive instant feedback on
+                        whether your response is correct or incorrect. Once the exam is completed, a detailed
+                        performance report is generated, showing the total number of exams completed, questions
+                        attempted, and a breakdown of correct and incorrect answers. Additionally, a category-wise
+                        performance chart helps you analyze your strengths and weaknesses, allowing you to focus on
+                        areas that need improvement. This mode provides a real exam-like experience, helping you track
+                        progress and enhance your knowledge effectively.</div>
+                </div>
+            </div>
         </a>
 
         <!-- Bookmarks -->
-        <a href="Bookmarks/bookmarks.html" class="button">
-            <img src="bookmark.jpg" alt="Bookmarks">
-            <span>My Bookmarks</span>
+        <a href="Bookmarks/bookmarks.html">
+            <div class="mode-Heading">
+                <h6>Bookmarks</h6>
+            </div>
+            <div class="home-container">
+                <img src="./images.jpg" alt="Avatar" class="image">
+                <div class="overlay">
+                    <div class="text">In Bookmark Mode, you can easily access all the questions you have saved from
+                        Question Mode and Practice Mode in one place. This allows you to quickly revisit important
+                        questions for review and better retention. You can filter your bookmarked questions by
+                        categories, making it convenient to focus on specific topics or subjects. Whether you want to
+                        revise tricky questions or strengthen your weak areas, this mode provides a structured way to
+                        organize and review key concepts efficiently.</div>
+                </div>
+            </div>
         </a>
     </div>
 
-    
 
-   
+
+
 </body>
 
 </html>
