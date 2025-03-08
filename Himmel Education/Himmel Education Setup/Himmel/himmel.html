@@ -11,11 +11,48 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+
+        nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(100deg, #0e979d, #99cdcf);
+    z-index: 1000;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    align-items: center;
+}
+   
+.home-button {
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            align-items: center ;
+        }
+        .header {
+            text-align: center;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .header img {
+            float: right;
+            height: 4rem;
+           
+           
+        }
+
+
+
         body {
             font-family: "Poppins", serif;
             font-weight: 100;
             font-style: normal;
-            margin: 20px;
+            padding-top: 60px;
         }
 
         .header_Himmel {
@@ -25,19 +62,7 @@
         }
 
 
-        .header {
-            text-align: center;
-            margin-bottom: 10px;
-            background: #fff;
-            border-radius: 10px;
-
-        }
-
-        .header img {
-            float: right;
-            height: 8rem;
-            margin-bottom: 5px;
-        }
+       
 
         .header h1 {
 
@@ -130,19 +155,9 @@
             background-color: darkred;
         }
 
-        .home-button svg {
-            transition: transform 0.2s ease;
-            cursor: pointer;
-        }
 
 
-
-        nav {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-        }
-
+       
         label {
             font-weight: 600;
         }
@@ -152,7 +167,7 @@
         }
 
         .question-input {
-            font-size: 25px;
+            font-size: 35px;
             font-weight: 600;
         }
 
@@ -236,33 +251,29 @@
 
 <body>
     <!-- Home Button -->
-    <nav>
+    <nav class="d-flex justify-content-between">
         <div class="home-button" onclick="location.href='../homepage.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#c62229" viewBox="0 0 24 24" fill="currentColor" width="36px"
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
                 height="36px">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
-        </div>
-
-        <div class=" container d-flex justify-content-end ">
-            <p style="color: darkgray; font-weight: 400;">A. Jamshed 2025</p>
+        
         </div>
         
-    </nav>
-    <div class=" col-lg-12 header_Himmel mt-2 mb-2">
+        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
+            <p class="text-white m-0 ">Exam Mode</p>
+        </div>
+        
+            <div class="header ">
+                <img src="./logo.png" alt="Himmel Education Logo">
+            </div>
+           
        
+       
+    </nav>
 
-
-        <div class="header d-flex text-center justify-content-center ">
-            <img src="logo.png" alt="Himmel Education Logo">
-        </div>
-
-        <div class=" mx-3  exam-logo">
-            <img src="./Exam Mode (1).png" alt="">
-        </div>
-        
-    </div>
-
+    <hr style="width: 100%; color: #333;">
+    
     <div class="container">
         <div class="stats-box">
             <div class="stats-card">
@@ -291,7 +302,7 @@
                 <h2 id="incorrectAnswers">0</h2>
             </div>
 
-            <div class="stats-card">
+            <!-- <div class="stats-card">
               
                 <span style="color: purple; font-weight: 600; ">Excellent 90% to 100% </span>
                 <span style="color: green; font-weight: 600;">Good 75% to 89% </span>
@@ -299,6 +310,12 @@
                 <span style=" color:#e63946; font-weight: 600;">Deficent Below 60% </span>
            
             
+            </div> -->
+
+
+
+            <div class="stats-card text-center justify-content-center">
+                <h1 class="text-center" id="exam-Result">0</h1>
             </div>
         </div>
 
@@ -311,11 +328,11 @@
             <canvas id="accuracyChart"></canvas>
         </div>
         <div class="module">
-            <img src="./Module.png" alt="">
+           <p style="font-weight: 500;">Overall performance by category</p>
         </div>
-        <p class=" text-center mt-5 question-input">Select Number of Questions</p>
-        <div class="text-center mt-3 mb-5">
-            <label for="questionNumberInput">Number of Questions (1-200):</label>
+        <h3 class=" text-center mt-5 question-input">Create Test Paper</h3>
+        <div class="text-center mt-4 mb-5">
+            <label for="questionNumberInput" style="font-size: 12px;">Number of Questions (1-200):</label>
             <input type="number" id="questionNumberInput" min="1" max="200">
         </div>
         <p class="Categories-selection mx-5">Select Categories:</p>
@@ -328,11 +345,19 @@
                 </div>
             </div>
         </div>
-        <div class="button-container" style="text-align: center; margin-top: 20px;">
+        <div class="button-container" style="text-align: center; margin-bottom: 70px;">
             <button id="beginTestButton" class="btn btn-danger" style="margin-right: 10px;">Start Test</button>
             
         </div>
     </div>
+
+    <footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
+        <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
+       
+        <p> &copy Himmel Education </p>
+        <p>  A.Jamshed 2025</p>
+    </div>
+    </footer> 
 </body>
 
 </html>
@@ -429,12 +454,30 @@
             const correctPercentage = totalQuestions ? (correctAnswers / totalQuestions) * 100 : 0;
             const incorrectPercentage = totalQuestions ? (incorrectAnswers / totalQuestions) * 100 : 0;
 
+            let examResultText =  document.getElementById("exam-Result")
+            
+            if(correctPercentage <= 50 && correctPercentage > 1){
+                examResultText.innerHTML = "E"
+            }else if(correctPercentage < 60 && correctPercentage >= 51  ){
+                examResultText.innerHTML = "D"
+            }else if (correctPercentage < 75 && correctPercentage >= 60){
+                examResultText.innerHTML = "C"
+            }else if (correctPercentage < 85 && correctPercentage >= 75 ){
+                examResultText.innerHTML = "B"
+            }else if (correctPercentage > 85){
+                examResultText.innerHTML = "A"
+            }  
+            else {
+                examResultText.innerHTML = " "
+            }
+            
             // Populate HTML with stats
             document.getElementById("quizzesCompleted").textContent = data.total_quizzes || 0;
             document.getElementById("questionsAttempted").textContent = totalQuestions;
             document.getElementById("correctAnswers").textContent = `${correctPercentage.toFixed(0)}%`;
             document.getElementById("incorrectAnswers").textContent = `${incorrectPercentage.toFixed(0)}%`;
             document.getElementById("totalQuestions").textContent = totalNumberQuestion
+           
 
             initializeCharts(data.category_scores);
         } catch (error) {

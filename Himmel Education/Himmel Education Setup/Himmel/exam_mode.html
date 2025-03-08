@@ -15,6 +15,40 @@
             font-weight: 100;
             font-style: normal;
             margin: 20px;
+            padding-top: 60px;
+        }
+        nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(100deg, #0e979d, #99cdcf);
+    z-index: 1000;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    align-items: center;
+}
+   
+.home-button {
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            align-items: center ;
+        }
+        .header {
+            text-align: center;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .header img {
+            float: right;
+            height: 4rem;
+           
+           
         }
 
         h1 {
@@ -99,68 +133,98 @@
 
         .exam-total {
             font-weight: 600;
+            text-align: left;
         }
 
-        .stats-row {
-            width: fit-content;
-
-        }
+       
 
         .go-back-button:hover {
             box-shadow: 0 12px 15px rgba(0, 0, 0, .6);
             transform: translateY(-2px)
         }
-        .exam-img {
-            width: 400px;
-            height: 400px;
-            text-align: center;
-        }
-        .exam-ques-img{
-            width: 400px;
-            height: 400px;
-            text-align: center;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 10px;
-            background: #fff;
-            border-radius: 10px;
-
-        }
-        .header img {
-            height: 8rem;
-           
-        }
-        .test-logo img{
-            width: 250px;
-            height: 47px;
-        }
+        
+        
+        
+        
         .result-ques{
             background-color: #c8f0f3;
             padding: 20px 10px;
         }
+
+        .stats-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stats-card {
+            text-align: center;
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stats-card img {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+        button#goBackButton {
+    padding: 10px 95px;
+}
+img.exam-ques-img {
+    /* width: 700px; */
+    height: 400px;
+}
+img.exam-img {
+    height: 400px;
+}
+
+
     </style>
 </head>
 
 <body>
 
-    <div class=" col-lg-12 header_Himmel mt-2 mb-2 d-flex justify-content-between align-items-center">
-        <div class="header d-flex text-center justify-content-center ">
-            <img src="logo.png" alt="Himmel Education Logo">
+    <nav class="d-flex justify-content-between">
+        <div class="home-button" onclick="location.href='../homepage.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
+                height="36px">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+        
         </div>
 
-        <div class=" mx-3  test-logo">
-            <img src="./Test Paper.png" alt="">
-        </div>       
-    </div>
+        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
+            <p class="text-white m-0 ">Test Paper</p>
+        </div>
+        
+        
+            <div class="header ">
+                <img src="./logo.png" alt="Himmel Education Logo">
+            </div>
+           
+       
+       
+    </nav>
 
+    <hr style="width: 100%; color: #333;">
+
+    
     <div class="container">
+      
         <div class="stats-container" id="examStats">
-            <div class="stats-row">
+            <h2>EXAM RESULT</h2>
+            <!-- <div class="stats-row">
                 <div class="card">
                     <div class="card-body">
                         <div class="exam-total">
-                            <p>Total Questions Attempted: <span id="totalQuestions">0</span></p>
+                            <p>Questions Attempted: <span id="totalQuestions">0</span></p>
                             <p>Correct Answers: <span id="correctAnswers">0</span></p>
                             <p>Incorrect Answers: <span id="incorrectAnswers">0</span></p>
                             <p>Exam Score: <span id="examScore">0%</span></p>
@@ -168,10 +232,36 @@
                         <button id="goBackButton" class="go-back-button bg-danger text-white">BACK</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
+            <div class="stats-box">
+                <div class="stats-card">
+                    <img src="que.png" alt="Total Questions">
+                    <h5>Total Questions</h5>
+                    <h2 id="totalQuestions">0</h2>
+                </div>
+                <div class="stats-card">
+                    <img  src="quiz.png" alt="Exam Score">
+                    <h5>Exam Score</h5>
+                    <h2 id="examScore">0</h2>
+                </div>
+                <div class="stats-card">
+                    <img src="./correct.png" alt="Correct Answers">
+                    <h5>Correct Answers</h5>
+                    <h2 id="correctAnswers">0</h2>
+                </div>
+                <div class="stats-card">
+                    <img  src="./wrong.png" alt="Incorrect Answers">
+                    <h5>Incorrect Answers</h5>
+                    <h2 id="incorrectAnswers">0</h2>
+                </div>
+               
+                </div>
+                <button id="goBackButton" class="go-back-button bg-danger text-white">BACK</button>
+
         </div>
         <div id="questionsContainer"></div>
-        <button id="submitExam" class="btn btn-danger mt-3">Submit Exam</button>
+        <button id="submitExam" class="btn btn-danger mb-5">Submit Exam</button>
     </div>
     <script>
         const RED_SVG =
@@ -392,6 +482,14 @@
 
         });
     </script>
+
+<footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
+    <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
+   
+    <p> &copy Himmel Education </p>
+    <p>  A.Jamshed 2025</p>
+</div>
+</footer> 
 </body>
 
 </html>

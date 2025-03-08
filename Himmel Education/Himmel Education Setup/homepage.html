@@ -9,6 +9,38 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+        nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(100deg, #0e979d, #99cdcf);
+    z-index: 1000;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    align-items: center;
+}
+   
+.home-button {
+            cursor: pointer;
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            align-items: center ;
+        }
+        .header {
+            text-align: center;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .header img {
+            float: right;
+            height: 4rem;
+           
+        }
         /* General body styling */
         body {
             font-family: "Poppins", serif;
@@ -16,19 +48,15 @@
             /* Bolder font for vibrancy */
             font-style: normal;
             margin: 20px;
-            background: linear-gradient(100deg, #00c4cc, #ff6b6b);
+            /* background: linear-gradient(100deg, #00c4cc, #ff6b6b); */
             /* background-image: linear-gradient(to right top, #5ffbf1, #46eefa, #41dfff, #52cffe, #69bff8, #73b1f5,
             #84a2ee, #9691e2, #aa7dd6, #be64c1, #cf47a4, #d91d80); */
+            padding-top: 60px;
 
         }
 
         /* Logo and Title */
-        .header {
-            display: flex;
-            margin-bottom: 10px;
-            align-items: center;
-            justify-content: space-between;
-        }
+       
 
         /* Container for the buttons */
         .container {
@@ -38,68 +66,14 @@
             justify-content: center;
         }
 
-        .header-logo {
-            display: flex;
-            justify-content: center;
-            text-align: center;
-        }
+        
 
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-        }
+       
 
-        .home-button {
-            cursor: pointer;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+      
 
-        .home-button:hover {
-            transform: scale(1.1);
-            /* Slight zoom on hover */
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
-        }
 
-        .header img {
-            float: right;
-            height: 8rem;
-            margin-bottom: 5px;
-        }
-
-        @media (max-width: 1200px) {
-            .container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 970px) {
-            .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        .Home-logo img {
-            width: 250px;
-            height: 47px;
-        }
-
-        @media (max-width: 720px) {
-            .header {
-                display: block;
-                text-align: center;
-                align-items: center;
-            }
-        }
-
+       
         .home-container {
             position: relative;
             border-radius: 15px;
@@ -108,6 +82,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             /* Stronger shadow */
             transition: transform 0.3s;
+            background: linear-gradient(100deg, #0e979d, #99cdcf);
         }
 
         .home-container:hover {
@@ -119,7 +94,7 @@
             display: block;
             width: 300px;
             height: 500px;
-            object-fit: cover;
+            object-fit: contain;
             /* Ensure image fits nicely */
         }
 
@@ -175,10 +150,10 @@
         a .mode-Heading h6 {
             font-size: 24px;
             font-weight: 700;
-            color: #fff;
-            background: linear-gradient(39deg, #272eff, #050629);
+            color: #333;
+           
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            
             background-clip: text;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -197,36 +172,72 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-    </style>
+
+        @media (max-width: 1320px) {
+            .container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .image {
+                width: 353px;
+            }
+        }
+
+        @media (max-width: 1140px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .image{
+                width: 453px;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 960px) {
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .Home-logo img {
+            width: 250px;
+            height: 47px;
+        }
+
+        @media (max-width: 720px) {
+            .header {
+                display: block;
+                text-align: center;
+                align-items: center;
+            }
+        }
+   
+
+   </style>
 </head>
 
 <body>
-    <div class="top-header">
-        <div class="home-button">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#c62229" viewBox="0 0 24 24" fill="currentColor" width="36px"
+    <nav class="d-flex justify-content-between">
+        <div class="home-button" >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
                 height="36px">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
         </div>
-        <div class=" container d-flex justify-content-end ">
-            <p style="color: darkgray; font-weight: 400;">A. Jamshed 2025</p>
+
+        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
+            <p class="text-white m-0 ">Home Page</p>
         </div>
-
-    </div>
-    <!-- Header Section -->
-    <nav>
-
-
-        <div class="header  mb-2 mt-2 ">
-            <div class="header-logo">
-                <img src="logo.png" alt="Himmel Education Logo">
+        
+            <div class="header ">
+                <img src="./logo.png" alt="Himmel Education Logo">
             </div>
-            <div class=" mx-3 Home-logo">
-                <img src="./Home Page.png" alt="">
-            </div>
-        </div>
-
+           
+       
+       
     </nav>
+    <hr style="width: 100%; color: #333">
 
     <!-- Buttons Container -->
     <div class="container">
@@ -236,16 +247,8 @@
                 <h6>Question Bank</h6>
             </div>
             <div class="home-container">
-                <img src="./question-marks-background_78370-2896.avif" alt="Avatar" class="image">
+                <img src="./question art.jpg" alt="Avatar" class="image">
 
-                <div class="overlay">
-                    <div class="text">In Question Mode, you can systematically go through all questions one by one. Each
-                        question comes with four answer options, and as you select and submit an answer, you'll receive
-                        instant feedback on whether your choice was correct or incorrect. After submission, a detailed
-                        explanation of the correct answer is provided. This mode allows for structured learning, helping
-                        you review concepts step by step while tracking your progress. This mode helps in systematic
-                        learningand ensures a step-by-step approach to mastering medical concepts.</div>
-                </div>
             </div>
         </a>
 
@@ -255,16 +258,8 @@
                 <h6>Practice Mode</h6>
             </div>
             <div class="home-container">
-                <img src="./PracticeMode.webp" alt="Avatar" class="image">
-                <div class="overlay">
-                    <div class="text">In Practice Mode, you can actively test your knowledge by selecting a specific
-                        category. This Mode will present a series of random questions from that category, each with four
-                        answer options. As you select and submit an answer, you'll receive instant feedback on whether
-                        your choice was correct or incorrect. After each submission, a detailed explanation of the
-                        correct answer is provided. Throughout the session, the app tracks your progress, displaying the
-                        number of correct and incorrect answers, helping you analyze your performance and improve your
-                        understanding.</div>
-                </div>
+                <img src="./practice art.jpg" alt="Avatar" class="image">
+               
             </div>
         </a>
 
@@ -274,17 +269,8 @@
                 <h6>Exam Mode</h6>
             </div>
             <div class="home-container">
-                <img src="./Exam Mode.webp" alt="Avatar" class="image">
-                <div class="overlay">
-                    <div class="text">In Exam Mode, you can take a full-length test by selecting up to 200 questions
-                        from all categories. As you attempt and submit answers, you'll receive instant feedback on
-                        whether your response is correct or incorrect. Once the exam is completed, a detailed
-                        performance report is generated, showing the total number of exams completed, questions
-                        attempted, and a breakdown of correct and incorrect answers. Additionally, a category-wise
-                        performance chart helps you analyze your strengths and weaknesses, allowing you to focus on
-                        areas that need improvement. This mode provides a real exam-like experience, helping you track
-                        progress and enhance your knowledge effectively.</div>
-                </div>
+                <img src="./exam art.jpg" alt="Avatar" class="image">
+                
             </div>
         </a>
 
@@ -295,21 +281,20 @@
             </div>
             <div class="home-container">
                 <img src="./images.jpg" alt="Avatar" class="image">
-                <div class="overlay">
-                    <div class="text">In Bookmark Mode, you can easily access all the questions you have saved from
-                        Question Mode and Practice Mode in one place. This allows you to quickly revisit important
-                        questions for review and better retention. You can filter your bookmarked questions by
-                        categories, making it convenient to focus on specific topics or subjects. Whether you want to
-                        revise tricky questions or strengthen your weak areas, this mode provides a structured way to
-                        organize and review key concepts efficiently.</div>
-                </div>
+                
             </div>
         </a>
     </div>
 
 
 
-
+    <footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
+        <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
+       
+        <p> &copy Himmel Education </p>
+        <p>  A.Jamshed 2025</p>
+    </div>
+    </footer> 
 </body>
 
 </html>

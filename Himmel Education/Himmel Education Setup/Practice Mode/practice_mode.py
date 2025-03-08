@@ -24,7 +24,7 @@ try:
     dataset = dataset[[
         "Question Number", "Question", "Category", "Option A",
         "Option B", "Option C", "Option D", "Correct Answer",
-        "Explanation", "Question Image", "Explanation Image", "Difficulty" , "Topic"
+        "Explanation", "Question Image", "Explanation Image", "Difficulty" 
     ]]
     dataset = dataset.dropna(subset=["Question Number", "Question"])
     dataset["Question Number"] = dataset["Question Number"].astype(int)

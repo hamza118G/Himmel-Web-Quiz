@@ -7,6 +7,8 @@
     <title>Himmel Education - Question Bank</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -21,32 +23,24 @@
             font-weight: 100;
             font-style: normal;
             margin: 20px;
+            /* background: linear-gradient(100deg, #0e979d, #99cdcf); */
+            padding-top: 60px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 10px;
             background: #fff;
             border-radius: 10px;
         }
 
         .header img {
             float: right;
-            height: 8rem;
-            margin-bottom: 5px;
+            height: 4rem;
+            
+           
         }
 
-        .header h1 {
-            font-weight: bold;
-            color: #e63946;
-            margin-bottom: 0;
-        }
-
-        .header h2 {
-            font-size: 1.2rem;
-            font-weight: normal;
-            color: #333;
-        }
+       
 
         .question-section {
             margin-top: 20px;
@@ -72,8 +66,7 @@
         .options {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 50%;
+           
             overflow-y: auto;
         }
 
@@ -87,7 +80,6 @@
 
         .question-content .que-img {
             text-align: center;
-            width: 700px;
             height: 400px;
         }
 
@@ -150,6 +142,7 @@
             background-color: transparent;
             text-decoration: underline;
             font-weight: 600;
+            text-transform: uppercase;
         }
 
         .dropdown-menu li:hover {
@@ -170,6 +163,7 @@
             padding: 5px;
             border-radius: 5px;
             transition: background-color 0.3s;
+            align-items: center ;
         }
 
         .options {
@@ -187,6 +181,7 @@
             border: 2px solid lightgray;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            color: #333;
         }
 
         .btn-secondary {
@@ -201,10 +196,17 @@
         }
 
         nav {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(100deg, #0e979d, #99cdcf);;
+    z-index: 1000;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    align-items: center;
+}
 
         .button-back {
             padding: 5px 23px;
@@ -226,9 +228,9 @@
         }
 
         .nav-buttons {
-            display: flex;
+            
             justify-content: center;
-            align-items: center;
+            align-items: end;
             gap: 20px;
         }
 
@@ -253,7 +255,7 @@
         }
 
         span {
-            color: rgba(13, 110, 253);
+            color: #fff;
             font-weight: 600;
         }
 
@@ -275,7 +277,7 @@
 
         #categoryDropdown {
             width: 100%;
-            background-color: white;
+           background: transparent;
             color: #333;
             cursor: pointer;
             outline: none;
@@ -296,12 +298,6 @@
             font-style: italic;
         }
 
-        .header_Himmel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .precision-learning {
             line-height: 0;
             
@@ -319,7 +315,7 @@
         }
 
         .dynamic-category{
-            display: flex;
+           
             justify-content: space-between;
             align-items: center;
             flex-direction: column;
@@ -337,133 +333,184 @@
         }
         #explanationImageContainer .exp-img{
             text-align: center;
-            width: 400px;
+         
             height: 400px;
         }
         .question-logo img{
             width: 300px;
           height: 47px;
         }
-        .nav-ques{
-            padding: 0 5rem;
-        }
+
         .displayQuestion-BG{
             background-color: #c8f0f3;
             padding: 20px 10px;
         }
+        .asd{
+            font-size: 20px;
+        }
+        .question-display{
+            background:transparent;
+            border: 2px solid lightgray;
+        }
+        .form-select{
+            background: transparent;
+            
+        }
+        .form-control{
+            background: transparent;
+            color: #fff;
+        }
+        .category-border{
+            background: transparent;
+            border-color: lightgray;
+            padding: 20px;
+           
+        }
+        input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
     </style>
 </head>
 
 <body>
-    <nav>
+    <nav class="d-flex justify-content-between align-items-center"> 
         <div class="home-button" onclick="location.href='../homepage.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#c62229" viewBox="0 0 24 24" fill="currentColor" width="36px"
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
                 height="36px">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
+        
+        </div>  
+
+        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
+            <p class="text-white m-0 ">Question Bank</p>
         </div>
-        <div class=" container d-flex justify-content-end ">
-            <p style="color: darkgray; font-weight: 400;">A. Jamshed 2025</p>
-        </div>
+        
+        
+            <div class="header ">
+                <img src="./logo.png" alt="Himmel Education Logo">
+            </div>
+           
+       
        
     </nav>
-    <div class=" col-lg-12 header_Himmel mt-2 mb-2">
-        
-
-
-        <div class="header d-flex text-center justify-content-center">
-            <img src="./logo.png" alt="Himmel Education Logo">
-        </div>
-
-
-        <div class=" mx-3 question-logo ">
-            <img src="./Question Bank.png" alt="">
-         </div>
-
-         
-    </div>
+    <hr style="width: 100%; color: #333">
 
     <div class="container">
         <!-- Input Section -->
         <div class="row mb-3 align-items-center">
             <!-- Category Dropdown -->
-            <div class="col-lg-3 mb-3">
-                <label for="categoryDropdown" class="form-label">Category:</label>
-                <select id="categoryDropdown" class="form-select col-md-3 align-self-end"
+            <div class="col-lg-2 mb-3">
+                <select style="text-transform: uppercase;" id="categoryDropdown" class="form-select col-md-3 "
                     onchange="fetchFirstQuestionByCategory()">
-                    <option>Select a Category</option>
+                    <option>SELECT CATEGORY</option>
                 </select>
             </div>
+            
+          
+         
+                    <div class="col-lg-2 mb-3 align-self-end">
+                        <button  data-toggle="tooltip" data-placement="bottom" title="Category Questions" class="btn btn-danger w-100" style="background: transparent; border-color: lightgray; color: #333;" id="displayTotalQuestionCategory">TOTAL QUESTIONS</button>
+                    </div>
+                    
+            
+       
+
+      
+                
+
+                    <div class="col-lg-2 mb-3 align-self-end">
+                        <button  data-toggle="tooltip" data-placement="top" title="Difficulty Level" class="btn btn-danger w-100" style="background: transparent; border-color: lightgray; color: #333;" id="displayDifficulty">DIFFICULTY</button>
+                    </div>
+
+
+               
+              
+
+
 
             <!-- View Bookmarks Button -->
-            <div class="col-lg-3 mb-3 align-self-end">
+            <div class="col-lg-2 mb-3 position-relative">
                 <div class="dropdown">
-                    <button class=" bookmark-color w-100 form-select" onclick="toggleViewBookmarks()">View
-                        Bookmarks</button>
+                    <button data-toggle="tooltip" data-placement="top" title="Bookmarks" class=" bookmark-color w-100 form-select " onclick="toggleViewBookmarks()">
+                        BOOKMARKS</button>
+                        <i class="fa-solid fa-arrow-down" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fff;"></i>
+
                     <ul id="bookmarkDropdown" class="dropdown-menu"></ul>
                 </div>
             </div>
 
             <!-- Question Number Input -->
-            <div class="col-lg-3 mb-3">
-                <label for="questionNumber" class="form-label">Specific Question:</label>
-                <input type="number" class="form-control" autocomplete="off" list="datalistOptions" id="questionNumber"
-                    class="form-control" placeholder="Search Specific Question">
+            <div class="col-lg-2 mb-3">
+                
+                <input  data-toggle="tooltip" data-placement="top" title="Type Question No" type="number" class="form-control" autocomplete="off" list="datalistOptions" id="questionNumber"
+                    class="form-control" placeholder="SEARCH QUESTION">
             </div>
 
             <!-- Search Button -->
-            <div class="col-md-3 mb-3 align-self-end">
-                <button class="btn btn-danger w-100" onclick="fetchQuestionByNumber()">Search</button>
+            <div class="col-md-2 mb-3 align-self-end">
+                <button class="btn btn-danger w-100" onclick="fetchQuestionByNumber()">SEARCH</button>
             </div>
-
-
           
         </div>
+       
     </div>
+
+   
+
+
+    <div class="container">
+    <div class="row  align-items-center">
+        <!-- Category Dropdown -->
+
+                        <div class="col-lg-4">
+                            <div class="dynamic-category nav-ques  align-items-end">
+                                <div class="d-flex  m-0 p-0 ">
+                        
+                        <div class="px-3">
+                            <i style="color: #333; font-size: 40px;" onclick="navigateQuestion('back')" class="fa-solid fa-arrow-left"></i>
+                        </div>
+
+                        <div>
+                            <i style="color: #333; font-size: 40px;" onclick="navigateQuestion('next')" class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+
 
       <!-- Navigation Buttons: Back and Next -->
-      <div class="dynamic-category nav-ques align-items-center">
-            <p class="pt-3 m-0">
-                <strong>Question Number:</strong>
-                 <span id="displayQuestionNumber">-</span>
-                 <em class="px-3">|</em>
-                 <strong>Category:</strong>
-                 <span id="displayCategory">-</span>
-                 <em class="px-3">|</em>
-                 <strong>Category Questions:</strong>
-                 <span id="displayTotalQuestionCategory">-</span>
-                 <em class="px-3">|</em>
-                 <strong>Difficulty:</strong>
-                 <span id="displayDifficulty">-</span>
-                 
-        </p>
-
-    <hr style="width: 100%;">
-
-        <div class="d-flex m-0 p-0 ">        
-        <div class="nav-buttons">
-            <a href="#" class="button-back" onclick="navigateQuestion('back')">Back</a>
-        </div>
-        <div class="nav-buttons">
-            <a href="#" class="button-next" onclick="navigateQuestion('next')">Next</a>
-        </div>
-    </div>
-
-</div>
+              
+       
+    
     <!-- Question Display Section -->
 
-
+ 
 
     <div class="question-section  question-color">
         <div class="question-box">
-            <div class="card">
+            
+                
+                
+            <div class="card question-display" >
+               
                 <div class="card-body">
+                   
                     <img id="bookmarkIcon" class="bookmark-icon"
                             src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg=="
                             alt="Bookmark" onclick="toggleBookmark()">
                             
                     <div class="question-content">                       
-                        <p id="displayQuestion" class="displayQuestion-BG"></p>
+                        <span class="asd text-center align-items-center text-danger" id="displayQuestionNumber"></span>
+                        /
+                         <span id="displayCategory" class="text-dark">-</span>
+                        <p id="displayQuestion" class="displayQuestion-BG text-dark mt-3"></p>
+                    
                         <div id="questionImageContainer" style="display:none; margin-top: 10px; text-align: center;">
                             <img id="questionImage" src="" alt="Question Image" class="img-fluid que-img"
                                 style="cursor: pointer;" onclick="openModal('questionImage')">
@@ -475,7 +522,7 @@
                                 <p id="optionC">-</p>
                                 <p id="optionD">-</p>
                             </div>
-                            <p class="text-primary" id="correctAnswer"><strong>Correct Answer:</strong> -</p>
+                            <p class="text-success" id="correctAnswer"><strong>Correct Answer:</strong> -</p>
                             <p id="feedbackMessage" style="color: red;"></p>
                         </div>
                     </div>
@@ -486,11 +533,11 @@
                     <div class="explanation-content">
 
                         <p class="d-flex justify-content-between">
-                            <strong>Explanation:</strong>
+                            <strong >Explanation:</strong>
                         </p>
 
-                        <p id="displayExplanation">-</p>
-                        <div id="explanationImageContainer" style="display:none; margin-top: 10px; text-align: center;">
+                        <p  id="displayExplanation">-</p>
+                        <div id="explanationImageContainer"  style="display:none; margin-top: 10px; text-align: center;">
                             <img id="explanationImage" src="" alt="Explanation Image" class="img-fluid exp-img"
                                 style="cursor: pointer;" onclick="openModal('explanationImage')">
                         </div>
@@ -838,7 +885,7 @@
                 if (response.data.success) {
                     const categoryDropdown = document.getElementById("categoryDropdown");
                     categoryDropdown.innerHTML =
-                    '<option value="none" selected>Select a Category</option>';
+                    '<option value="none" selected>Select Category</option>';
 
                     response.data.categories.forEach(category => {
                         const option = document.createElement("option");
@@ -943,7 +990,13 @@
     </script>
 
     
-
+<footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
+    <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
+   
+    <p> &copy Himmel Education </p>
+    <p>  A.Jamshed 2025</p>
+</div>
+</footer> 
 
 </body>
 
