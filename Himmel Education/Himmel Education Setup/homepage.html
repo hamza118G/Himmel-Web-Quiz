@@ -14,7 +14,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(100deg, #0e979d, #99cdcf);
+    background: linear-gradient(100deg, #ffc107, #c49c21);
     z-index: 1000;
     padding: 10px 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,6 +29,10 @@
             border-radius: 5px;
             transition: background-color 0.3s;
             align-items: center ;
+        }
+        .home-button img{
+            width: 55px;
+            height: 55px;
         }
         .header {
             text-align: center;
@@ -82,7 +86,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             /* Stronger shadow */
             transition: transform 0.3s;
-            background: linear-gradient(100deg, #0e979d, #99cdcf);
+            
         }
 
         .home-container:hover {
@@ -93,7 +97,7 @@
         .image {
             display: block;
             width: 300px;
-            height: 500px;
+            height: 350px;
             object-fit: contain;
             /* Ensure image fits nicely */
         }
@@ -149,7 +153,7 @@
 
         a .mode-Heading h6 {
             font-size: 24px;
-            font-weight: 700;
+           
             color: #333;
            
             -webkit-background-clip: text;
@@ -220,19 +224,13 @@
 <body>
     <nav class="d-flex justify-content-between">
         <div class="home-button" >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
-                height="36px">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
+            <img src="./Practice Mode/Himmel Mascot.png" alt="">
         </div>
 
-        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
-            <p class="text-white m-0 ">Home Page</p>
+        <div class="text-center align-items-center"  style="font-size: 20px; font-weight: 400;">
+            <p class="text-dark m-0 ">HOME PAGE</p>
         </div>
         
-            <div class="header ">
-                <img src="./logo.png" alt="Himmel Education Logo">
-            </div>
            
        
        
@@ -288,13 +286,12 @@
 
 
 
-    <footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
-        <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
-       
-        <p> &copy Himmel Education </p>
-        <p>  A.Jamshed 2025</p>
-    </div>
-    </footer> 
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px; background-color: #f1f1f1; text-align: end;">
+        <div class="d-flex justify-content-between text-dark" style="font-weight: 300; float: right;">
+            <p> © HIMMEL EDUCATION </p>
+           
+        </div>
+    </footer>
 </body>
 
 </html>

@@ -44,7 +44,7 @@
         }
 
         .question-box {
-            padding: 20px;
+            padding: 0px 20px 20px 20px;
             border-radius: 8px;
             width: 100%;
         }
@@ -78,7 +78,7 @@
             border: 2px solid lightgray;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            font-weight: 600;
+            font-weight: 400;
         }
 
         .options p.selected {
@@ -108,12 +108,12 @@
         .feedback-message {
             font-size: 1.4rem;
             /* Adjust feedback text size */
-            font-weight: bold;
+            font-weight: 300;
             margin-top: 10px;
             /* Reduced margin */
-            text-align: center;
             width: 100%;
             /* Ensure it fits inside the card */
+            padding: 6px 86px;
         }
 
         .feedback-message.correct {
@@ -196,6 +196,11 @@
             transition: background-color 0.3s;
             align-items: center ;
         }
+        .home-button img{
+            width: 55px;
+            height: 55px;
+
+        }
 
         .btn-warning {
             background-color: #FFD700;
@@ -262,7 +267,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(100deg, #0e979d, #99cdcf);
+    background: linear-gradient(100deg, #ffc107, #c49c21);
     z-index: 1000;
     padding: 10px 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -307,23 +312,22 @@
         }
 
         p#displayExplanation {
-            font-weight: 600;
+            font-weight: 300;
         }
 
         .submit-button {
-            padding: 5px 23px;
+            padding: 6px 73px;
             margin: 20px;
             color: #000;
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 5px;
             font-size: 15px;
-            border: 1px solid lightgray;
+            border: none;
             overflow: hidden;
-            border-radius: 10px;
+            border-radius: 5px;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            font-weight: 600;
-            background-color: transparent;
+            background-color: #cac4c4;
         }
 
         .submit-button:hover {
@@ -379,8 +383,8 @@
     display: flex;
     justify-content: flex-start;
     font-size: 1.2rem;
-    font-weight: bold;
-    padding: 0 5rem; /* Match nav-ques padding */
+    
+   
 }
 .correct-counter {
     color: #f0f7f2;
@@ -394,12 +398,12 @@
     align-items: center;
 }
 #incorrectCount{
-    color: #e2172b;
-    font-size: 36px;
+    color: #000;
+    font-size: 27px;
 }
 #correctCount{
-    color: #15b43a;
-    font-size: 36px;
+    color: #000;
+    font-size: 27px;
 }
 
 @media only screen and (max-width:975px) {
@@ -409,12 +413,12 @@
 }
 
 .correct-counter img{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
 }
 .incorrect-counter img{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -429,22 +433,17 @@ input::-webkit-inner-spin-button {
 <body>
     <nav class="d-flex justify-content-between">
         <div class="home-button" onclick="location.href='../homepage.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
-                height="36px">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
+           <img src="./Himmel Mascot.png" alt="">
         
         </div>
         
         
-        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
-            <p class="text-white m-0 ">Practice Mode</p>
+        <div class="text-center align-items-center"  style="font-size: 20px; font-weight: 400;">
+            <p class="text-dark m-0 ">PRACTICE MODE</p>
         </div>
 
 
-            <div class="header ">
-                <img src="./logo.png" alt="Himmel Education Logo">
-            </div>
+    
            
        
        
@@ -455,44 +454,85 @@ input::-webkit-inner-spin-button {
    
 
     <div class="container">
-        <div class="row mb-3 align-items-center ">
+        <div class="row align-items-center ">
 
             <!-- Category Dropdown -->
-            <div class="col-lg-2 mb-3">
+            <div class="col-lg-2  ">
                 
                 <select id="categoryDropdown" class="form-select">
                     <option  selected>None</option>
                 </select>
             </div>
 
-            <div class="col-lg-2 mb-3 align-self-end">
-                <button class="btn btn-danger w-100" style="background: transparent; border-color: lightgray; color: #333;" id="displayTotalQuestionCategory" data-toggle="tooltip" data-placement="top" title="Category Questions">TOTAL QUESTIONS</button>
+            <!-- Difficulty Categoty -->
+            <div class="col-lg-2  ">   
+                <button class="btn btn-danger w-100" style="background: transparent; border-color: lightgray; color: #333;" id="displayDifficulty" data-toggle="tooltip" data-placement="top" title="Difficulty"> DIFFICULTY</button>
+             </div>
+
+        
+                 <!-- Search Input -->
+                 <div class="col-lg-2  ">
+                
+                    <input data-toggle="tooltip" data-placement="top" title="Type Question No" type="number" id="questionNumber" autocomplete="off" class="form-control"
+                        placeholder="SEARCH QUESTIONS">
+                </div>
+
+              <!-- Load Questions Button -->
+  <div class="col-lg-2 ">
+    <button id="loadButton"  style="background: #cac4c4; border: none; color: #000;" class="btn btn-danger w-100">LOAD QUESTION</button>
+</div>
+                
+                
+           
+
+            <div class="col-lg-2  ">
+                <div class="counter-section">
+                    <div class="correct-counter text-success ">
+                        <img src="./Tick Cross-17.png" alt="">
+                         <span class="mx-2" id="correctCount">0</span>
+                        </div>
+
+                    <div class="incorrect-counter">
+                        <img src="./Tick Cross-18.png" alt="">
+                         <span class="mx-2" id="incorrectCount">0</span>
+                        </div>
+                </div>
             </div>
 
-            <div class="col-lg-2 mb-3 align-self-end">
+
+            <div class="col-lg-2 text-center align-items-center">
+                <div class="dynamic-category nav-ques  align-items-center">
+                    <div class="d-flex justify-content-center m-0 p-0 ">
+            
+                        <div class="px-3">
+                            <img src="./Forward & Backward-15.png" style="width: 40px; height: 40px;" onclick="navigateQuestion('back')" alt="">
+                            <!-- <i style="color: #333; font-size: 40px;"  class="fa-solid fa-arrow-left"></i> -->
+                        </div>
+            
+                        <div>
+                            <img src="./Forward & Backward-16.png"  onclick="navigateQuestion('next')" style="width: 40px; height: 40px;" alt="">
+                            <!-- <i style="color: #333; font-size: 40px;" class="fa-solid fa-arrow-right"></i> -->
+                        </div>
+        </div>
+    </div>
+
+</div>
+
+  
+            <!-- <div class="col-lg-2 mb-3 align-self-end">
                 <button class="btn btn-danger w-100" style="background: transparent; border-color: lightgray; color: #333;" id="displayDifficulty" data-toggle="tooltip" data-placement="top" title="Difficulty">DIFFICULTY</button>
             </div>
 
 
-            <!-- View Bookmarks Button and Dropdown -->
             <div class="col-lg-2 mb-3 align-self-end position-relative">
                 <button data-toggle="tooltip" data-placement="top" title="Bookmarks" id="viewBookmarksButton" class="form-select w-100 bookmark-color"
                     onclick="toggleViewBookmarks()">BOOKMARKS</button>
                 <ul id="bookmarkDropdown" class="dropdown-menu"></ul>
-            </div>
+            </div> -->
 
 
-            <!-- Search Input -->
-            <div class="col-lg-2 mb-3">
-                
-                <input data-toggle="tooltip" data-placement="top" title="Type Question No" type="number" id="questionNumber" autocomplete="off" class="form-control"
-                    placeholder="SEARCH QUESTIONS">
-            </div>
-
-            <!-- Load Questions Button -->
-            <div class="col-lg-2 mb-3 align-self-end">
-                <button id="loadButton" class="btn btn-danger w-100">LOAD QUESTION</button>
-            </div>
+       
+           
 
             <!-- Back and Next Buttons -->
            
@@ -510,33 +550,9 @@ input::-webkit-inner-spin-button {
             <div class="row  align-items-center">
                 <!-- Category Dropdown -->
         
-                                <div class="col-lg-3">
-                                    <div class="dynamic-category nav-ques  align-items-end">
-                                        <div class="d-flex  m-0 p-0 ">
-                                
-                                <div class="px-4">
-                                    <i style="color: #333; font-size: 40px;" onclick="navigateQuestion('back')" class="fa-solid fa-arrow-left"></i>
-                                </div>
-        
-                                <div>
-                                    <i style="color: #333; font-size: 40px;" onclick="navigateQuestion('next')" class="fa-solid fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </div>
-        
-                    </div>
+                              
                     <div class="col-lg-9 ">
-                    <div class="counter-section">
-                        <div class="correct-counter text-success ">
-                            <img src="./Tick & Cross-12.png" alt="">
-                             <span class="mx-4" id="correctCount">0</span>
-                            </div>
-
-                        <div class="incorrect-counter px-3">
-                            <img src="./Cross.png" alt="">
-                             <span class="mx-4" id="incorrectCount">0</span>
-                            </div>
-                    </div>
+                   
                 </div>
                     </div>
                 </div>
@@ -596,13 +612,12 @@ input::-webkit-inner-spin-button {
     </div>
     </div>
 
-    <footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
-        <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
-       
-        <p> &copy Himmel Education </p>
-        <p>  A.Jamshed 2025</p>
-    </div>
-    </footer> 
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px; background-color: #f1f1f1; text-align: end;">
+        <div class="d-flex justify-content-between text-dark" style="font-weight: 300; float: right;">
+            <p> © HIMMEL EDUCATION </p>
+           
+        </div>
+    </footer>
 </body>
 </html>
 
@@ -665,7 +680,7 @@ input::-webkit-inner-spin-button {
             questions = [response.data.data]; // Wrap the question in an array
             currentIndex = 0; // Reset to the first question
             displayQuestion(questions[currentIndex]); // Display the question
-            categoryQuestion.textContent = `${response.data.total_questions}`;
+           
             difficultyLevel.textContent = `${response.data.data.Difficulty}`
         } else {
             console.error("Failed to fetch question for category.");
@@ -718,7 +733,7 @@ async function loadQuestions() {
             
             displayQuestion(questions[currentIndex]);
               difficultyLevel.textContent = `${response.data.data.Difficulty}`
-            categoryQuestion.textContent = `${response.data.total_questions}`
+           
         } else {
             alert(response.data.error || "Question not found.");
         }
@@ -916,13 +931,13 @@ async function loadQuestions() {
 
     if (selectedAnswer === correctAnswer) {
         document.getElementById(`option${selectedAnswer}`).classList.add("correct");
-        feedback.textContent = "Correct!";
+        feedback.textContent = "Correct";
         feedback.style.color = "green";
         correctCount++;
         document.getElementById("correctCount").textContent = correctCount;
     } else {
         document.getElementById(`option${selectedAnswer}`).classList.add("wrong");
-        feedback.textContent = "Wrong!";
+        feedback.textContent = "Wrong";
         feedback.style.color = "red";
         document.getElementById(`option${correctAnswer}`).classList.add("correct");
         incorrectCount++;

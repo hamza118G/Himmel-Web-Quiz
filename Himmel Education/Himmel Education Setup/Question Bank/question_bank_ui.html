@@ -165,13 +165,17 @@
             transition: background-color 0.3s;
             align-items: center ;
         }
+        .home-button img {
+            width: 55px;
+            height: 55px;
+        }
 
         .options {
             display: flex;
             flex-direction: column;
             gap: 8px;
             padding: 10px;
-            font-weight: 600;
+            font-weight: 400;
         }
 
         .options p {
@@ -200,7 +204,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(100deg, #0e979d, #99cdcf);;
+    background: linear-gradient(100deg, #ffc107, #c49c21);
     z-index: 1000;
     padding: 10px 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -272,7 +276,7 @@
         }
 
         p#displayExplanation {
-            font-weight: 600;
+            font-weight: 300;
         }
 
         #categoryDropdown {
@@ -377,21 +381,16 @@ input::-webkit-inner-spin-button {
 <body>
     <nav class="d-flex justify-content-between align-items-center"> 
         <div class="home-button" onclick="location.href='../homepage.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
-                height="36px">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
+          <img src="./Himmel Mascot.png" alt="">
         
         </div>  
 
-        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
-            <p class="text-white m-0 ">Question Bank</p>
+        <div class="text-center align-items-center"  style="font-size: 20px; font-weight: 400;">
+            <p class="text-dark m-0 ">QUESTION BANK</p>
         </div>
         
         
-            <div class="header ">
-                <img src="./logo.png" alt="Himmel Education Logo">
-            </div>
+           
            
        
        
@@ -402,7 +401,7 @@ input::-webkit-inner-spin-button {
         <!-- Input Section -->
         <div class="row mb-3 align-items-center">
             <!-- Category Dropdown -->
-            <div class="col-lg-2 mb-3">
+            <div class="col-lg-2 mb-3 align-self-end">
                 <select style="text-transform: uppercase;" id="categoryDropdown" class="form-select col-md-3 "
                     onchange="fetchFirstQuestionByCategory()">
                     <option>SELECT CATEGORY</option>
@@ -414,12 +413,7 @@ input::-webkit-inner-spin-button {
                     <div class="col-lg-2 mb-3 align-self-end">
                         <button  data-toggle="tooltip" data-placement="bottom" title="Category Questions" class="btn btn-danger w-100" style="background: transparent; border-color: lightgray; color: #333;" id="displayTotalQuestionCategory">TOTAL QUESTIONS</button>
                     </div>
-                    
-            
-       
-
-      
-                
+                                   
 
                     <div class="col-lg-2 mb-3 align-self-end">
                         <button  data-toggle="tooltip" data-placement="top" title="Difficulty Level" class="btn btn-danger w-100" style="background: transparent; border-color: lightgray; color: #333;" id="displayDifficulty">DIFFICULTY</button>
@@ -431,57 +425,50 @@ input::-webkit-inner-spin-button {
 
 
 
-            <!-- View Bookmarks Button -->
-            <div class="col-lg-2 mb-3 position-relative">
-                <div class="dropdown">
-                    <button data-toggle="tooltip" data-placement="top" title="Bookmarks" class=" bookmark-color w-100 form-select " onclick="toggleViewBookmarks()">
-                        BOOKMARKS</button>
-                        <i class="fa-solid fa-arrow-down" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #fff;"></i>
-
-                    <ul id="bookmarkDropdown" class="dropdown-menu"></ul>
-                </div>
-            </div>
+           
+            
 
             <!-- Question Number Input -->
-            <div class="col-lg-2 mb-3">
+            <div class="col-lg-2 mb-3 align-self-end">
                 
                 <input  data-toggle="tooltip" data-placement="top" title="Type Question No" type="number" class="form-control" autocomplete="off" list="datalistOptions" id="questionNumber"
                     class="form-control" placeholder="SEARCH QUESTION">
             </div>
 
-            <!-- Search Button -->
+
             <div class="col-md-2 mb-3 align-self-end">
-                <button class="btn btn-danger w-100" onclick="fetchQuestionByNumber()">SEARCH</button>
+                <button class="btn btn-danger w-100" style="background: #cac4c4; border: none; color: #000;" onclick="fetchQuestionByNumber()">SEARCH</button>
             </div>
+
+
+
+            <div class="col-lg-2 mb-3 position-relative align-self-end">
+                <div class="dynamic-category nav-ques  align-items-end">
+                    <div class="d-flex justify-content-center  m-0 p-0 ">
+            
+            <div class="px-3">
+                <img src="./Forward & Backward-15.png" style="width: 40px; height: 40px;" onclick="navigateQuestion('back')" alt="">
+                <!-- <i style="color: #333; font-size: 40px;"  class="fa-solid fa-arrow-left"></i> -->
+            </div>
+
+            <div>
+                <img src="./Forward & Backward-16.png"  onclick="navigateQuestion('next')" style="width: 40px; height: 40px;" alt="">
+                <!-- <i style="color: #333; font-size: 40px;" class="fa-solid fa-arrow-right"></i> -->
+            </div>
+        </div>
+    </div>
+            </div>
+
+
+
+            <!-- Search Button -->
+           
           
         </div>
        
     </div>
 
    
-
-
-    <div class="container">
-    <div class="row  align-items-center">
-        <!-- Category Dropdown -->
-
-                        <div class="col-lg-4">
-                            <div class="dynamic-category nav-ques  align-items-end">
-                                <div class="d-flex  m-0 p-0 ">
-                        
-                        <div class="px-3">
-                            <i style="color: #333; font-size: 40px;" onclick="navigateQuestion('back')" class="fa-solid fa-arrow-left"></i>
-                        </div>
-
-                        <div>
-                            <i style="color: #333; font-size: 40px;" onclick="navigateQuestion('next')" class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            </div>
-        </div>
 
 
       <!-- Navigation Buttons: Back and Next -->
@@ -522,7 +509,7 @@ input::-webkit-inner-spin-button {
                                 <p id="optionC">-</p>
                                 <p id="optionD">-</p>
                             </div>
-                            <p class="text-success" id="correctAnswer"><strong>Correct Answer:</strong> -</p>
+                            <p style="font-weight: 200;" id="correctAnswer"><strong>CORRECT ANSWER:</strong> -</p>
                             <p id="feedbackMessage" style="color: red;"></p>
                         </div>
                     </div>
@@ -554,43 +541,43 @@ input::-webkit-inner-spin-button {
         
     <script>
         const API_BASE_URL = "http://127.0.0.1:5006";
-
+    
         // Base64 SVG for icons
         const GRAY_SVG =
             "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
         const RED_SVG =
             "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZTYzOTQ2IiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
-
+    
         // Toggle bookmark
         async function toggleBookmark() {
             const questionNumber = parseInt(document.getElementById("displayQuestionNumber").textContent.trim());
             const category = document.getElementById("displayCategory").textContent.trim();
-
+    
             if (!questionNumber) {
                 alert("No question is loaded to bookmark.");
                 return;
             }
-
+    
             try {
                 const response = await axios.post(`${API_BASE_URL}/toggle_bookmark`, {
                     question_number: questionNumber,
                     category: category,
                 });
-
+    
                 if (response.data.success) {
                     const isBookmarked = response.data.bookmarked;
-
+    
                     // Update the local Set
                     if (isBookmarked) {
                         bookmarkedQuestions.add(questionNumber);
                     } else {
                         bookmarkedQuestions.delete(questionNumber);
                     }
-
+    
                     // Update the current icon dynamically
                     const bookmarkIcon = document.getElementById("bookmarkIcon");
                     bookmarkIcon.src = isBookmarked ? RED_SVG : GRAY_SVG;
-
+    
                     console.log(`Bookmark for question ${questionNumber} updated:`, isBookmarked);
                 } else {
                     alert("Error updating bookmark status.");
@@ -599,7 +586,7 @@ input::-webkit-inner-spin-button {
                 console.error("Error toggling bookmark:", error);
             }
         }
-
+    
         async function fetchBookmarks() {
             try {
                 const response = await axios.get(`${API_BASE_URL}/get_bookmarks`);
@@ -607,22 +594,18 @@ input::-webkit-inner-spin-button {
                     const bookmarks = response.data.bookmarks;
                     const bookmarkDropdown = document.getElementById("bookmarkDropdown");
                     bookmarkDropdown.innerHTML = ""; // Clear existing bookmarks
-
-                    // Populate the dropdown with the latest bookmarks
+    
                     bookmarks.forEach(bookmark => {
                         const listItem = document.createElement("li");
                         listItem.textContent = `Q${bookmark.question_number}: ${bookmark.category}`;
                         listItem.onclick = () => {
                             fetchBookmarkedQuestion(bookmark.question_number, bookmark.category);
-                            bookmarkDropdown.classList.remove("show"); // Close the dropdown
+                            bookmarkDropdown.classList.remove("show");
                         };
                         bookmarkDropdown.appendChild(listItem);
                     });
-
-                    // Update the global bookmarked questions list
+    
                     const bookmarkedQuestionNumbers = new Set(bookmarks.map(b => b.question_number));
-
-                    // Call the function to update icons based on the fetched bookmarks
                     updateBookmarkIcons(bookmarkedQuestionNumbers);
                 } else {
                     console.error("Failed to fetch bookmarks:", response.data.error);
@@ -631,13 +614,12 @@ input::-webkit-inner-spin-button {
                 console.error("Error fetching bookmarks:", error);
             }
         }
-
+    
         async function fetchBookmarkedQuestion(questionNumber, category) {
             try {
-
                 document.getElementById("categoryDropdown").value = "none";
                 document.getElementById("questionNumber").value = "";
-
+    
                 const response = await axios.get(
                     `${API_BASE_URL}/get_question?question_number=${encodeURIComponent(questionNumber)}&category=${encodeURIComponent(category)}`
                 );
@@ -650,19 +632,17 @@ input::-webkit-inner-spin-button {
                 console.error("Error fetching bookmarked question:", error);
             }
         }
+    
         let bookmarkedQuestions = new Set();
-
+    
         async function fetchBookmarksAndSyncIcons() {
             try {
                 const response = await axios.get(`${API_BASE_URL}/get_bookmarks`);
                 if (response.data.success) {
-                    // Update the Set with all bookmarked question numbers
                     bookmarkedQuestions.clear();
                     response.data.bookmarks.forEach(bookmark => {
                         bookmarkedQuestions.add(parseInt(bookmark.question_number, 10));
                     });
-
-                    // Update icons dynamically for all questions currently displayed
                     updateBookmarkIcons(bookmarkedQuestions);
                 } else {
                     console.error("Failed to fetch bookmarks:", response.data.error);
@@ -671,71 +651,58 @@ input::-webkit-inner-spin-button {
                 console.error("Error fetching bookmarks:", error);
             }
         }
-
-        // Update bookmark icons for all questions on the page based on the bookmarkedQuestions Set
+    
         function updateBookmarkIcons(bookmarkedQuestions) {
             const questionElements = document.querySelectorAll("[data-question-number]");
             questionElements.forEach(element => {
                 const questionNumber = parseInt(element.dataset.questionNumber, 10);
                 const bookmarkIcon = element.querySelector(".bookmark-icon");
-
-                // Set the icon color based on whether the question is bookmarked
                 if (bookmarkedQuestions.has(questionNumber)) {
                     bookmarkIcon.src = RED_SVG;
-                } else if(bookmarkedQuestions.get(questionNumber)) {
+                } else {
                     bookmarkIcon.src = GRAY_SVG;
-                } else{
-                    alert("Bookmark is not reserved or Saved.")
                 }
             });
         }
-
-        // Show or hide the bookmarks dropdown
+    
         function toggleViewBookmarks() {
             const dropdown = document.getElementById("bookmarkDropdown");
             dropdown.classList.toggle("show");
-
+    
             if (dropdown.classList.contains("show")) {
                 fetchBookmarks();
             }
         }
-
-
-
+    
         function resetUI() {
-            // Reset any styles or selections
             document.querySelectorAll(".options li").forEach(option => {
                 option.classList.remove("selected", "correct", "wrong");
             });
             document.getElementById("correctAnswer").textContent = "Correct Answer: -";
             document.getElementById("feedbackMessage").textContent = "";
             document.getElementById("displayExplanation").style.display = "none";
-            
         }
-
-        // Fetch a question by its number
+    
         async function fetchQuestionByNumber() {
             const questionNumber = document.getElementById("questionNumber").value.trim();
             const errorMessage = document.getElementById("errorMessage");
-           
-            const difficultyLevel = document.getElementById("displayDifficulty")
-            const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
-
-            errorMessage.textContent = ""; // Clear previous errors
-
+            const difficultyLevel = document.getElementById("displayDifficulty");
+            const categoryQuestion = document.getElementById("displayTotalQuestionCategory");
+    
+            errorMessage.textContent = "";
+    
             if (!questionNumber) {
-                // Do nothing if the user isn't searching by question number
                 return;
             }
-
+    
             try {
                 const response = await axios.get(
-                    `${API_BASE_URL}/get_question?question_number=${encodeURIComponent(questionNumber)}`);
+                    `${API_BASE_URL}/get_question?question_number=${encodeURIComponent(questionNumber)}`
+                );
                 if (response.data.success) {
                     displayQuestion(response.data.data);
-                    categoryQuestion.textContent = `${response.data.total_questions}`
-                    difficultyLevel.textContent = `${response.data.data.Difficulty}`
-
+                    categoryQuestion.textContent = `${response.data.total_questions}`;
+                    difficultyLevel.textContent = `${response.data.data.Difficulty}`;
                 } else {
                     errorMessage.textContent = response.data.error || "Error fetching question.";
                 }
@@ -744,14 +711,11 @@ input::-webkit-inner-spin-button {
                 console.error("Fetch Error:", error);
             }
         }
-
-        // Function to fetch and update the bookmark status dynamically
+    
         async function fetchBookmarkStatus(questionNumber) {
             try {
                 const response = await axios.get(`${API_BASE_URL}/get_bookmark_status`, {
-                    params: {
-                        question_number: questionNumber
-                    },
+                    params: { question_number: questionNumber },
                 });
                 const bookmarkIcon = document.getElementById("bookmarkIcon");
                 bookmarkIcon.src = response.data.bookmarked ? RED_SVG : GRAY_SVG;
@@ -759,13 +723,11 @@ input::-webkit-inner-spin-button {
                 console.error("Error fetching bookmark status:", error);
             }
         }
-
+    
         async function updateBookmarkIcon(questionNumber) {
             try {
                 const response = await axios.get(`${API_BASE_URL}/get_bookmark_status`, {
-                    params: {
-                        question_number: questionNumber
-                    },
+                    params: { question_number: questionNumber },
                 });
                 const bookmarkIcon = document.getElementById("bookmarkIcon");
                 if (response.data.success) {
@@ -777,32 +739,26 @@ input::-webkit-inner-spin-button {
                 console.error("Error fetching bookmark status:", error);
             }
         }
-
+    
         function displayQuestion(question) {
-
-            // Reset the UI first to clear old data and styles
             resetUI();
-
-            // Check if the question object is valid
+    
             if (!question || !question["Question Number"]) {
                 console.error("Invalid question data provided to displayQuestion.");
                 return;
             }
-
-            // Update question details
+    
             document.getElementById("displayQuestionNumber").textContent = question["Question Number"] || "-";
             document.getElementById("displayCategory").textContent = question["Category"] || "-";
             document.getElementById("displayQuestion").textContent = question["Question"] || "-";
-            document.getElementById("optionA").textContent = `  ${question["Option A"] || "-"} `;
+            document.getElementById("optionA").textContent = ` ${question["Option A"] || "-"} `;
             document.getElementById("optionB").textContent = ` ${question["Option B"] || "-"}`;
             document.getElementById("optionC").textContent = ` ${question["Option C"] || "-"}`;
             document.getElementById("optionD").textContent = `${question["Option D"] || "-"}`;
-
-            // Update Correct Answer with fallback
+    
             const correctAnswerElement = document.getElementById("correctAnswer");
             correctAnswerElement.textContent = `Correct Answer: ${question["Correct Answer"] || "-"}`;
-
-            // Update Question Image
+    
             const questionImageContainer = document.getElementById("questionImageContainer");
             const questionImage = document.getElementById("questionImage");
             if (question["Question Image"]) {
@@ -811,8 +767,7 @@ input::-webkit-inner-spin-button {
             } else {
                 questionImageContainer.style.display = "none";
             }
-
-            // Update Explanation Image
+    
             const explanationImageContainer = document.getElementById("explanationImageContainer");
             const explanationImage = document.getElementById("explanationImage");
             if (question["Explanation Image"]) {
@@ -821,18 +776,16 @@ input::-webkit-inner-spin-button {
             } else {
                 explanationImageContainer.style.display = "none";
             }
-
-            // Update explanation with fallback
+    
             const explanationElement = document.getElementById("displayExplanation");
             if (question["Explanation"] && question["Explanation"].trim() !== "") {
                 explanationElement.textContent = question["Explanation"];
-                explanationElement.style.display = "block"; // Show explanation
+                explanationElement.style.display = "block";
             } else {
                 explanationElement.textContent = "-";
-                explanationElement.style.display = "none"; // Hide if no explanation
+                explanationElement.style.display = "none";
             }
-
-            // Dynamically update the bookmark icon for the current question
+    
             const bookmarkIcon = document.getElementById("bookmarkIcon");
             if (bookmarkedQuestions.has(question["Question Number"])) {
                 bookmarkIcon.src = RED_SVG;
@@ -840,53 +793,49 @@ input::-webkit-inner-spin-button {
                 bookmarkIcon.src = GRAY_SVG;
             }
         }
-
+    
         function openModal(imageId) {
             const modalImage = document.getElementById("modalImage");
             const imageSrc = document.getElementById(imageId).src;
             modalImage.src = imageSrc;
             new bootstrap.Modal(document.getElementById("imageModal")).show();
         }
-
-
-        // Fetch the first question for the selected category
+    
         async function fetchFirstQuestionByCategory() {
-    const categoryDropdown = document.getElementById("categoryDropdown");
-    const selectedCategory = categoryDropdown.value;
-    const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
-    const difficultyLevel = document.getElementById("displayDifficulty")
-
-    if (!selectedCategory || selectedCategory === "none") {
-        console.error("No valid category selected.");
-        return;
-    }
-
-    try {
-        const response = await axios.get(
-            `${API_BASE_URL}/get_first_question_by_category?category=${encodeURIComponent(selectedCategory)}`
-        );
-        if (response.data.success) {
-            displayQuestion(response.data.data);
-              categoryQuestion.textContent = `${response.data.total_questions}`
-              difficultyLevel.textContent = `${response.data.data.Difficulty}`
-        } else {
-            console.error("Failed to fetch question for category.");
+            const categoryDropdown = document.getElementById("categoryDropdown");
+            const selectedCategory = categoryDropdown.value;
+            const categoryQuestion = document.getElementById("displayTotalQuestionCategory");
+            const difficultyLevel = document.getElementById("displayDifficulty");
+    
+            if (!selectedCategory || selectedCategory === "none") {
+                console.error("No valid category selected.");
+                return;
+            }
+    
+            try {
+                const response = await axios.get(
+                    `${API_BASE_URL}/get_first_question_by_category?category=${encodeURIComponent(selectedCategory)}`
+                );
+                if (response.data.success) {
+                    displayQuestion(response.data.data);
+                    categoryQuestion.textContent = `${response.data.total_questions}`;
+                    difficultyLevel.textContent = `${response.data.data.Difficulty}`;
+                } else {
+                    console.error("Failed to fetch question for category.");
+                }
+            } catch (error) {
+                console.error("Error fetching first question by category:", error);
+            }
         }
-    } catch (error) {
-        console.error("Error fetching first question by category:", error);
-    }
-}
-
-
-        // Fetch all categories
+    
         async function fetchCategories() {
             try {
                 const response = await axios.get(`${API_BASE_URL}/get_categories`);
                 if (response.data.success) {
                     const categoryDropdown = document.getElementById("categoryDropdown");
                     categoryDropdown.innerHTML =
-                    '<option value="none" selected>Select Category</option>';
-
+                        '<option value="none" selected>Select Category</option>';
+    
                     response.data.categories.forEach(category => {
                         const option = document.createElement("option");
                         option.value = category;
@@ -900,79 +849,63 @@ input::-webkit-inner-spin-button {
                 console.error("Error fetching categories:", error);
             }
         }
-
-        // Navigate to the next or previous question
+    
         async function navigateQuestion(direction) {
-    const currentQuestion = document.getElementById("displayQuestionNumber").textContent.trim();
-    const currentCategory = document.getElementById("displayCategory").textContent.trim(); // Get the category
-    const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
-    const difficultyLevel = document.getElementById("displayDifficulty")
-
-
-    if (!currentQuestion || !currentCategory) {
-        console.error("Current question number or category is missing.");
-        return;
-    }
-
-    try {
-        const response = await axios.get(
-            `${API_BASE_URL}/navigate_question?question_number=${currentQuestion}&category=${encodeURIComponent(currentCategory)}&direction=${direction}`
-        );
-        if (response.data.success) {
-            displayQuestion(response.data.data);
-            categoryQuestion.textContent = `${response.data.total_questions}`
-            difficultyLevel.textContent = `${response.data.data.Difficulty}`
-        } else {
-            console.error(response.data.error || "Navigation error.");
+            const currentQuestion = document.getElementById("displayQuestionNumber").textContent.trim();
+            const currentCategory = document.getElementById("displayCategory").textContent.trim();
+            const categoryQuestion = document.getElementById("displayTotalQuestionCategory");
+            const difficultyLevel = document.getElementById("displayDifficulty");
+    
+            if (!currentQuestion || !currentCategory) {
+                console.error("Current question number or category is missing.");
+                return;
+            }
+    
+            try {
+                const response = await axios.get(
+                    `${API_BASE_URL}/navigate_question?current_question=${currentQuestion}&category=${encodeURIComponent(currentCategory)}&direction=${direction}`
+                );
+                if (response.data.success) {
+                    displayQuestion(response.data.data);
+                    categoryQuestion.textContent = `${response.data.total_questions}`;
+                    difficultyLevel.textContent = `${response.data.data.Difficulty}`;
+                } else {
+                    console.error(response.data.error || "Navigation error.");
+                }
+            } catch (error) {
+                console.error("Error navigating question:", error);
+            }
         }
-    } catch (error) {
-        console.error("Error navigating question:", error);
-    }
-}
-
-
-
-
-
-
+    
         window.onload = async () => {
             try {
-                // Load aggregate bookmarks and sync icons
                 await fetchBookmarksAndSyncIcons();
-
-                // Populate the categories dropdown dynamically
                 await fetchCategories();
-
             } catch (error) {
                 console.error("Error during page load initialization:", error);
             }
         };
-
+    
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
-
-        // Load the question based on URL parameters
+    
         async function loadQuestionFromURL() {
             const questionNumber = getQueryParam("question_number");
             const category = getQueryParam("category");
-            const categoryQuestion = document.getElementById("displayTotalQuestionCategory")
-            const difficultyLevel = document.getElementById("displayDifficulty")
-
+            const categoryQuestion = document.getElementById("displayTotalQuestionCategory");
+            const difficultyLevel = document.getElementById("displayDifficulty");
+    
             if (questionNumber && category) {
                 try {
                     const response = await axios.get(
                         `${API_BASE_URL}/get_question?question_number=${questionNumber}&category=${encodeURIComponent(category)}`
                     );
                     if (response.data.success) {
-                        // Update the questions array with the fetched question
-                        questions = [response.data.data]; // Wrap the question in an array
-                         // Reset index to 0
-                         displayQuestion(response.data.data);
-                           categoryQuestion.textContent = `${response.data.total_questions}`
-                           difficultyLevel.textContent = `${response.data.data.Difficulty}`
-                         // Display the question
+                        displayQuestion(response.data.data);
+                        categoryQuestion.textContent = `${response.data.total_questions}`;
+                        difficultyLevel.textContent = `${response.data.data.Difficulty}`;
                     } else {
                         console.error("Failed to fetch question:", response.data.error);
                     }
@@ -981,23 +914,16 @@ input::-webkit-inner-spin-button {
                 }
             }
         }
-
-        // Call the function when the page loads
-        document.addEventListener("DOMContentLoaded", loadQuestionFromURL);
-
-
-        
-    </script>
-
     
-<footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
-    <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
-   
-    <p> &copy Himmel Education </p>
-    <p>  A.Jamshed 2025</p>
-</div>
-</footer> 
-
-</body>
-
-</html>
+        document.addEventListener("DOMContentLoaded", loadQuestionFromURL);
+    </script>
+    
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px; background-color: #f1f1f1; text-align: end;">
+        <div class="d-flex justify-content-between text-dark" style="font-weight: 300; float: right;">
+            <p> © HIMMEL EDUCATION </p>
+           
+        </div>
+    </footer>
+    
+    </body>
+    </html>

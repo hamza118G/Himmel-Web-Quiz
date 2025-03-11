@@ -22,7 +22,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(100deg, #0e979d, #99cdcf);
+    background: linear-gradient(100deg, #ffc107, #c49c21);
     z-index: 1000;
     padding: 10px 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -37,6 +37,10 @@
             border-radius: 5px;
             transition: background-color 0.3s;
             align-items: center ;
+        }
+        .home-button img {
+            width: 55px;
+            height: 55px;
         }
         .header {
             text-align: center;
@@ -185,7 +189,14 @@ img.exam-img {
     height: 400px;
 }
 
-
+.timer {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            background-color: #dc3545;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -193,21 +204,16 @@ img.exam-img {
 
     <nav class="d-flex justify-content-between">
         <div class="home-button" onclick="location.href='../homepage.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" fill="currentColor" width="36px"
-                height="36px">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-            </svg>
+            <img src="../Practice Mode//Himmel Mascot.png" alt="">
         
         </div>
 
-        <div class="text-center align-items-center"  style="font-size: 30px; font-weight: 400;">
-            <p class="text-white m-0 ">Test Paper</p>
+        <div class="text-center align-items-center"  style="font-size: 20px; font-weight: 400;">
+            <p class="text-dark m-0 ">TEST PAPER</p>
         </div>
         
-        
-            <div class="header ">
-                <img src="./logo.png" alt="Himmel Education Logo">
-            </div>
+        <div class="timer" id="timer">00:00</div> <!-- Timer Display -->
+            
            
        
        
@@ -220,6 +226,7 @@ img.exam-img {
       
         <div class="stats-container" id="examStats">
             <h2>EXAM RESULT</h2>
+            
             <!-- <div class="stats-row">
                 <div class="card">
                     <div class="card-body">
@@ -257,19 +264,20 @@ img.exam-img {
                 </div>
                
                 </div>
-                <button id="goBackButton" class="go-back-button bg-danger text-white">BACK</button>
+                <button id="goBackButton" class="go-back-button bg-secondary text-white" style="background: #cac4c4; border: none; color: #000;">BACK</button>
 
         </div>
+
         <div id="questionsContainer"></div>
         <button id="submitExam" class="btn btn-danger mb-5">Submit Exam</button>
     </div>
     <script>
-        const RED_SVG =
-            "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZTYzOTQ2IiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
-        const GRAY_SVG =
-            "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
+        const RED_SVG = "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZTYzOTQ2IiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMkg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
+        const GRAY_SVG = "data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjY2NjIiBoZWlnaHQ9IjI0IiB3aWR0aD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTggMHg2YTIgMiAwIDAgMC0yIDJ2MThsOC01IDggNXYtMThoLTEweiIvPjwvc3ZnPg==";
 
         let bookmarkedQuestions = new Set();
+        let timerInterval; // To store the timer interval
+
         async function fetchBookmarksAndSyncIcons() {
             try {
                 const response = await axios.get("http://127.0.0.1:5003/get_bookmarks");
@@ -303,6 +311,35 @@ img.exam-img {
             }
         }
 
+        // Function to format time as MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Function to start the timer
+        function startTimer(durationInSeconds) {
+            let timeLeft = durationInSeconds;
+            const timerDisplay = document.getElementById("timer");
+
+            timerInterval = setInterval(() => {
+                timerDisplay.textContent = formatTime(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitExam(); // Automatically submit when time is up
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        // Function to auto-submit the exam
+        async function autoSubmitExam() {
+            const submitButton = document.getElementById("submitExam");
+            submitButton.click(); // Trigger the submit button's click event
+        }
+
         document.addEventListener("DOMContentLoaded", async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const questionsParam = urlParams.get("questions");
@@ -317,7 +354,7 @@ img.exam-img {
             let questions = [];
             const userAnswers = {};
 
-            await fetchBookmarksAndSyncIcons(); // Load bookmarks before rendering the page
+            await fetchBookmarksAndSyncIcons();
 
             if (questionsParam) {
                 try {
@@ -326,20 +363,25 @@ img.exam-img {
                         questionsContainer.innerHTML = "<p>No questions available.</p>";
                         return;
                     }
+
+                    // Set timer duration: 1 minute per question
+                    const totalTimeInSeconds = questions.length * 60; // 60 seconds per question
+                    startTimer(totalTimeInSeconds); // Start the timer
+
                     questions.forEach((question, index) => {
                         const questionDiv = document.createElement("div");
                         questionDiv.className = "question-card";
                         questionDiv.innerHTML = `
-                        <h5>Question ${index + 1}:</h5>
-                        <p class="result-ques">${question.Question}</p>
-                        ${question["Question Image"] ? `<img class="exam-ques-img" src="${question["Question Image"]}" alt="Question Image">` : ""}
-                        <div class="options">
-                            <div class="option" data-index="${index}" data-option="A">${question["Option A"]}</div>
-                            <div class="option" data-index="${index}" data-option="B">${question["Option B"]}</div>
-                            <div class="option" data-index="${index}" data-option="C">${question["Option C"]}</div>
-                            <div class="option" data-index="${index}" data-option="D">${question["Option D"]}</div>
-                        </div>
-                    `;
+                            <h5>Question ${index + 1}:</h5>
+                            <p class="result-ques">${question.Question}</p>
+                            ${question["Question Image"] ? `<img class="exam-ques-img" src="${question["Question Image"]}" alt="Question Image">` : ""}
+                            <div class="options">
+                                <div class="option" data-index="${index}" data-option="A">${question["Option A"]}</div>
+                                <div class="option" data-index="${index}" data-option="B">${question["Option B"]}</div>
+                                <div class="option" data-index="${index}" data-option="C">${question["Option C"]}</div>
+                                <div class="option" data-index="${index}" data-option="D">${question["Option D"]}</div>
+                            </div>
+                        `;
                         questionsContainer.appendChild(questionDiv);
                     });
 
@@ -349,8 +391,7 @@ img.exam-img {
                             const option = e.target.dataset.option;
                             userAnswers[index] = option;
 
-                            const options = e.target.parentElement.querySelectorAll(
-                                ".option");
+                            const options = e.target.parentElement.querySelectorAll(".option");
                             options.forEach(opt => opt.classList.remove("selected"));
                             e.target.classList.add("selected");
                         });
@@ -366,49 +407,31 @@ img.exam-img {
             } else {
                 questionsContainer.innerHTML = "<p>No questions available.</p>";
             }
-            document.getElementById("submitExam").addEventListener("click", async () => {
-                // Identify unanswered questions based on their localized numbering in the current exam
-                const missedQuestions = questions.map((_, index) => index + 1) // Map to localized question numbers (1-based index)
-                    .filter((questionNumber) => !userAnswers[questionNumber -1]); // Check if unanswered
 
-                if (missedQuestions.length > 0) {
-                    // Display the missed localized question numbers
-                    alert(`You missed the following questions: ${missedQuestions.join(", ")}`);
-                    return;
-                }
+            document.getElementById("submitExam").addEventListener("click", async () => {
+                clearInterval(timerInterval); // Stop the timer when manually submitted
 
                 const answers = questions.map((question, index) => ({
-                    question_number: question[
-                    "Question Number"], // Global question number
-                    user_answer: userAnswers[index] || "", // User's answer
+                    question_number: question["Question Number"],
+                    user_answer: userAnswers[index] || "",
                 }));
 
                 try {
-                    console.log("Payload sent to /evaluate_exam:", {
-                        answers
-                    });
+                    console.log("Payload sent to /evaluate_exam:", { answers });
 
-                    const response = await axios.post("http://127.0.0.1:5001/evaluate_exam", {
-                        answers
-                    });
+                    const response = await axios.post("http://127.0.0.1:5001/evaluate_exam", { answers });
 
                     if (response.data.success) {
-                        const {
-                            correct_count,
-                            incorrect_count,
-                            questions: results
-                        } = response.data.results;
+                        const { correct_count, incorrect_count, questions: results } = response.data.results;
 
                         totalQuestionsElem.textContent = correct_count + incorrect_count;
                         correctAnswersElem.textContent = correct_count;
                         incorrectAnswersElem.textContent = incorrect_count;
-                        examScoreElem.textContent =
-                            `${Math.floor((correct_count / (correct_count + incorrect_count)) * 100)}%`;
+                        examScoreElem.textContent = `${Math.floor((correct_count / (correct_count + incorrect_count)) * 100)}%`;
 
-                        examStats.style.display = "block"; // Show stats after submitting exam
+                        examStats.style.display = "block";
                         displayResults(results);
 
-                        // Log stats to backend
                         await axios.post("http://127.0.0.1:5000/log_results", {
                             total_attempted: correct_count + incorrect_count,
                             correct_count,
@@ -416,10 +439,7 @@ img.exam-img {
                             category_scores: response.data.results.category_scores,
                         });
 
-                        window.scrollTo({
-                            top: 0,
-                            behavior: "smooth"
-                        });
+                        window.scrollTo({ top: 0, behavior: "smooth" });
                     } else {
                         alert("Error evaluating exam: " + response.data.error);
                     }
@@ -429,67 +449,61 @@ img.exam-img {
                 }
             });
 
-
             goBackButton.addEventListener("click", () => {
-                window.location.href = "himmel.html"; // Redirect to homepage
+                window.location.href = "himmel.html";
             });
 
             function displayResults(results) {
-                questionsContainer.innerHTML = ""; // Clear previous content
+                questionsContainer.innerHTML = "";
                 results.forEach((result, index) => {
                     const resultDiv = document.createElement("div");
                     resultDiv.className = "question-card";
 
                     const isBookmarked = bookmarkedQuestions.has(result.question_number);
                     const bookmarkIcon = `
-            <img 
-                src="${isBookmarked ? RED_SVG : GRAY_SVG}" 
-                class="bookmark-icon" 
-                onclick="toggleBookmark(${result.question_number}, '${result.category}', this)" 
-                alt="Bookmark Icon" 
-            />
-        `;
+                        <img 
+                            src="${isBookmarked ? RED_SVG : GRAY_SVG}" 
+                            class="bookmark-icon" 
+                            onclick="toggleBookmark(${result.question_number}, '${result.category}', this)" 
+                            alt="Bookmark Icon" 
+                        />
+                    `;
 
                     const getClass = (option) => {
-                        if (option === result.correct_answer)
-                    return "correct"; // Correct answer is green
-                        if (option === result.user_answer && option !== result.correct_answer)
-                            return "incorrect"; // User's wrong answer is red
-                    return ""; // Default styling for other options
+                        if (option === result.correct_answer) return "correct";
+                        if (option === result.user_answer && option !== result.correct_answer) return "incorrect";
+                        return "";
                     };
 
                     resultDiv.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h5>Question ${index + 1}:</h5>
-                ${bookmarkIcon} <!-- Place icon at the right -->
-            </div>
-            <p class="result-ques">${result.question}</p>
-            ${result.question_image ? `<img class="exam-ques-img" src="${result.question_image}" alt="Question Image">` : ""}
-            <div class="options">
-                <div class="option ${getClass("A")}">${result.options["A"]}</div>
-                <div class="option ${getClass("B")}">${result.options["B"]}</div>
-                <div class="option ${getClass("C")}">${result.options["C"]}</div>
-                <div class="option ${getClass("D")}">${result.options["D"]}</div>
-            </div>
-            <p>${result.is_correct ? "✅ Correct" : "❌ Incorrect"}</p>
-             <p>Explanation: ${result.explanation}</p>
-            ${result.explanation_image ? `<img class = "exam-img" src="${result.explanation_image}" alt="Explanation Image">` : ""}
-        `;
-
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h5>Question ${index + 1}:</h5>
+                            ${bookmarkIcon}
+                        </div>
+                        <p class="result-ques">${result.question}</p>
+                        ${result.question_image ? `<img class="exam-ques-img" src="${result.question_image}" alt="Question Image">` : ""}
+                        <div class="options">
+                            <div class="option ${getClass("A")}">${result.options["A"]}</div>
+                            <div class="option ${getClass("B")}">${result.options["B"]}</div>
+                            <div class="option ${getClass("C")}">${result.options["C"]}</div>
+                            <div class="option ${getClass("D")}">${result.options["D"]}</div>
+                        </div>
+                        <p>${result.is_correct ? "✅ Correct" : "❌ Incorrect"}</p>
+                        <p>Explanation: ${result.explanation}</p>
+                        ${result.explanation_image ? `<img class="exam-img" src="${result.explanation_image}" alt="Explanation Image">` : ""}
+                    `;
                     questionsContainer.appendChild(resultDiv);
                 });
             }
-
         });
     </script>
 
-<footer style=" position: fixed;bottom: 0;left: 0; width: 100%; padding: 10px;background-color: #f1f1f1;text-align: end;" >
-    <div class="d-flex justify-content-between text-dark" style="font-weight: 600;">
-   
-    <p> &copy Himmel Education </p>
-    <p>  A.Jamshed 2025</p>
-</div>
-</footer> 
+<footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px; background-color: #f1f1f1; text-align: end;">
+    <div class="d-flex justify-content-between text-dark" style="font-weight: 300; float: right;">
+        <p> © HIMMEL EDUCATION </p>
+       
+    </div>
+</footer>
 </body>
 
 </html>
