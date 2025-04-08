@@ -22,7 +22,7 @@ try:
     required_columns = [
         "Question Number", "Question", "Category", "Option A",
         "Option B", "Option C", "Option D", "Correct Answer",
-        "Explanation", "Question Image", "Explanation Image","Difficulty"
+        "Explanation", "Question Image", "Explanation Image","Difficulty" ,"Cat2"
     ]
     existing_columns = [col for col in required_columns if col in dataset.columns]
 
@@ -63,6 +63,21 @@ def get_question_data(question_number):
         print(f"Error fetching data: {e}")
         return None
 
+@app.route('/get_cat2', methods=['GET'])
+def get_cat2():
+    try:
+        if "Cat2" not in dataset.columns:
+            return jsonify({"success": False, "error": "'Cat2' column not found in dataset."})
+
+        cat2_values = dataset["Cat2"].dropna().drop_duplicates().tolist()
+        return jsonify({"success": True, "cat2_values": cat2_values})
+    except Exception as e:
+        print(f"Error fetching Cat2: {e}")
+        return jsonify({"success": False, "error": "Could not fetch Cat2 values."})
+
+
+
+
 @app.route('/get_question', methods=['GET'])
 def get_question():
     category = request.args.get('category', type=str)
@@ -101,6 +116,10 @@ def get_question():
         print(f"Error fetching question: {e}")
         return jsonify({"success": False, "error": "Could not fetch question."})
 
+
+
+
+
 @app.route('/get_categories', methods=['GET'])
 def get_categories():
     try:
@@ -109,6 +128,10 @@ def get_categories():
     except Exception as e:
         print(f"Error fetching categories: {e}")
         return jsonify({"success": False, "error": "Could not fetch categories."})
+
+
+
+
 
 @app.route('/get_first_question_by_category', methods=['GET'])
 def get_first_question_by_category():
@@ -133,17 +156,56 @@ def get_first_question_by_category():
         print(f"Error fetching question by category: {e}")
         return jsonify({"success": False, "error": "Could not fetch question by category."})
 
+
+
+
+
+
+
+
+
+@app.route('/get_first_question_by_cat2', methods=['GET'])
+def get_first_question_by_cat2():
+    cat2 = request.args.get('cat2', type=str)
+    if not cat2:
+        return jsonify({"success": False, "error": "Invalid or missing category."})
+
+    try:
+        filtered = dataset[dataset["Cat2"].str.strip().str.lower() == cat2.strip().lower()]
+        if not filtered.empty:
+            total_questions = len(filtered)
+            first_question_number = filtered.index.min()
+            question_data = get_question_data(first_question_number)
+            return jsonify({
+                "success": True,
+                "data": question_data,
+                "total_questions": total_questions
+            })
+        else:
+            return jsonify({"success": False, "error": f"No questions found for category '{category}'."})
+    except Exception as e:
+        print(f"Error fetching question by category: {e}")
+        return jsonify({"success": False, "error": "Could not fetch question by category."})
+
+
+        
 @app.route('/navigate_question', methods=['GET'])
 def navigate_question():
     category = request.args.get('category', type=str)
+    cat2 = request.args.get('cat2', type=str)  # Add cat2 parameter
     current_question = request.args.get('current_question', type=int)
     direction = request.args.get('direction', default='next', type=str)
 
-    if not category:
-        return jsonify({"success": False, "error": "Category is required for navigation."})
-    
+    if not (category or cat2):
+        return jsonify({"success": False, "error": "Category or Cat2 is required for navigation."})
+
     try:
-        filtered_questions = dataset[dataset["Category"].str.strip().str.lower() == category.strip().lower()]
+        # Determine which filter to apply
+        if cat2:
+            filtered_questions = dataset[dataset["Cat2"].str.strip().str.lower() == cat2.strip().lower()]
+        else:
+            filtered_questions = dataset[dataset["Category"].str.strip().str.lower() == category.strip().lower()]
+
         if not filtered_questions.empty:
             total_questions = len(filtered_questions)
             question_numbers = sorted(filtered_questions.index)
@@ -169,7 +231,7 @@ def navigate_question():
                 "data": question_data,
                 "total_questions": total_questions
             })
-        return jsonify({"success": False, "error": f"No questions found for category '{category}'."})
+        return jsonify({"success": False, "error": f"No questions found for the specified filter."})
     except Exception as e:
         print(f"Error navigating question: {e}")
         return jsonify({"success": False, "error": "An internal server error occurred."})

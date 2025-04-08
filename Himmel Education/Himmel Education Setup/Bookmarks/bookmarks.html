@@ -197,7 +197,7 @@
 <body>
     <nav class="d-flex justify-content-between">
         <div class="home-button" onclick="location.href='../homepage.html'">
-          <img src="../Practice Mode/Himmel Mascot.png" alt="">
+          <img src="../data/Web-images/Himmel Mascot.png" alt="">
         
         </div>
 
@@ -319,8 +319,7 @@
         // Remove a bookmark
         // Remove a bookmark
         async function removeBookmark(questionNumber, category) {
-            console.log("Attempting to remove bookmark for question number:", questionNumber, "and category:",
-                category); // Debugging
+         
 
             if (!questionNumber || !category) {
                 console.error("Invalid or missing question number or category.");
@@ -339,7 +338,7 @@
                     if (rowToRemove) {
                         rowToRemove.remove();
                     }
-                    console.log(`Bookmark for question ${questionNumber} successfully removed.`);
+                   
                 } else {
                     console.error("Error removing bookmark:", response.data.error || "Unknown error.");
                 }
