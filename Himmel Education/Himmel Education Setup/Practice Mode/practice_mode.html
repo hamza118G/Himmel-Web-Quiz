@@ -456,7 +456,7 @@
             <div class="col-lg-2">
                 <select style="text-transform: uppercase;" id="categoryDropdown" class="form-select"
                     onchange="updateActiveFilter('category')">
-                    <option selected>Select Sub-Category</option>
+                    <option  selected>Select Sub-Category</option>
                 </select>
             </div>
             <div class="col-lg-2">
@@ -575,7 +575,7 @@
             try {
                 const response = await axios.get(`${API_BASE_URL}/get_categories`);
                 const dropdown = document.getElementById("categoryDropdown");
-                dropdown.innerHTML = '<option selected>Select Sub-Cat</option>';
+                dropdown.innerHTML = '<option selected value ="none">Select Category</option>';
                 response.data.categories.forEach(category => {
                     const option = document.createElement("option");
                     option.value = category.trim().toLowerCase();
@@ -591,7 +591,7 @@
             try {
                 const response = await axios.get(`${API_BASE_URL}/get_cat2`);
                 const dropdown = document.getElementById("cat2Dropdown");
-                dropdown.innerHTML = '<option selected>Select Category</option>';
+                dropdown.innerHTML = '<option value"none" selected>Select Sub-Cat</option>';
                 if (response.data.success) {
                     response.data.cat2_values.forEach(cat2 => {
                         const option = document.createElement("option");
@@ -632,7 +632,7 @@
         }
 
         async function fetchFirstQuestionsByCategory(category) {
-            const difficultyLevel = document.getElementById("displayDifficulty");
+           
             try {
                 const response = await axios.get(
                     `${API_BASE_URL}/get_first_question_by_category?category=${encodeURIComponent(category)}`
@@ -641,7 +641,7 @@
                     questions = [response.data.data];
                     currentIndex = 0;
                     displayQuestion(questions[currentIndex]);
-                    difficultyLevel.textContent = response.data.data.Difficulty || "-";
+                   
                 } else {
                     console.error("Failed to fetch question for category.");
                 }
@@ -651,7 +651,7 @@
         }
 
         async function fetchFirstQuestionsByCat2(cat2) {
-            const difficultyLevel = document.getElementById("displayDifficulty");
+           
             try {
                 const response = await axios.get(
                     `${API_BASE_URL}/get_first_question_by_cat2?cat2=${encodeURIComponent(cat2)}`
@@ -660,7 +660,7 @@
                     questions = [response.data.data];
                     currentIndex = 0;
                     displayQuestion(questions[currentIndex]);
-                    difficultyLevel.textContent = response.data.data.Difficulty || "-";
+                   
                 } else {
                     console.error("Failed to fetch question for Cat2.");
                 }
@@ -680,12 +680,13 @@
                     questions = [response.data.data];
                     currentIndex = 0;
                     const questionCategory = response.data.data.Category.toLowerCase();
+                    const questionCat2 = response.data.data.Cat2.toLowerCase();
                     document.getElementById("categoryDropdown").value = questionCategory;
-                    document.getElementById("cat2Dropdown").value = "none";
+                    document.getElementById("cat2Dropdown").value = questionCat2;
                     activeFilter = 'category';
                     activeFilterValue = questionCategory;
                     displayQuestion(questions[currentIndex]);
-                    document.getElementById("displayDifficulty").textContent = response.data.data.Difficulty || "-";
+                   
                 } else {
                     alert(response.data.error || "Question not found.");
                 }
@@ -718,7 +719,7 @@
                         currentIndex = questions.length - 1;
                     }
                     displayQuestion(questionData);
-                    document.getElementById("displayDifficulty").textContent = questionData.Difficulty || "-";
+                   
                 } else {
                     alert(response.data.error);
                 }
